@@ -33,16 +33,18 @@ function SearchBox(props) {
                     <Form id="searchBox">
                         <Form.Row>
                             <Col xs={quoteCurrencyColumnSize}>
-                                <Form.Label>Quote</Form.Label>
+                                <Form.Label>Quote Currency</Form.Label>
                             </Col>
                             {
                                 props.searchType === searchTypes.PAIR && 
                                 <Col xs={baseCurrencyColumnSize}>
-                                    <Form.Label>Base</Form.Label>
+                                    <Form.Label>Base Currency</Form.Label>
                                 </Col>
                             }
                             <Col xs={budgetLabelColumnSize}>
-                                <Form.Label>Budget</Form.Label>
+                                <Form.Label>
+                                    {isBudgetSearch ? "Budget" : "Base Amount"}
+                                </Form.Label>
                             </Col>
                         </Form.Row>
                         <Form.Row className="align-items-center">
