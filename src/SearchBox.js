@@ -7,11 +7,12 @@ import Select from 'react-select';
 import './SearchBox.css';
 
 function getCurrencySearchOptions(currencies) {
-    var options = Object.entries(currencies).map(([abbreviation, name]) => {
-        return { value: abbreviation, label: `${name} (${abbreviation})`};
-    });
-
-    return options;
+    return Object.entries(currencies).map(
+        ([abbreviation, name]) => ({
+            value: abbreviation,
+            label: `${name} (${abbreviation})`
+        })
+    );
 }
 
 function SearchBox(props) {

@@ -1,7 +1,8 @@
 import React from 'react';
-import { Nav } from 'react-bootstrap';
+import Nav from 'react-bootstrap/Nav';
 import BootstrapNavbar from 'react-bootstrap/Navbar';
-import { navbarLinks } from './constants';
+import { LinkContainer } from 'react-router-bootstrap'
+import { pages } from './constants';
 
 function Navbar(props) {
     return (
@@ -11,13 +12,14 @@ function Navbar(props) {
             </BootstrapNavbar.Brand>
             <Nav className="ml-auto">
                 {
-                    Object.entries(navbarLinks).map(([key, {name}]) => (
-                        <Nav.Link
-                            href="#" key={key} 
-                            active={name === props.active} 
-                            onClick={() => props.onLinkClick(key)}>
-                            {name}
-                        </Nav.Link>
+                    Object.entries(pages).map(([key, {name, pathname}]) => (
+                        <LinkContainer to={pathname} key={key} exact>
+                            <Nav.Link
+                                onClick={() => {props.onLinkClick(name)}}
+                            >
+                                {name}
+                            </Nav.Link>
+                        </LinkContainer>
                     ))
                 }
             </Nav>

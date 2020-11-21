@@ -4,26 +4,31 @@ import EducationPage from './EducationPage';
 import AboutPage from './AboutPage';
 import ContactPage from './ContactPage';
 
-export const navbarLinks = {
+export const pages = {
     EXCHANGES: {
         name: "Exchanges",
-        pageComponent: ViewExchangesPage
+        pathname: "/",
+        PageComponent: ViewExchangesPage
     },
     FAVORITES: {
         name: "Favorites",
-        pageComponent: FavoritesPage
+        pathname: "/favorites",
+        PageComponent: FavoritesPage
     },
     EDUCATION: {
         name: "Education",
-        pageComponent: EducationPage
+        pathname: "/education",
+        PageComponent: EducationPage
     },
     ABOUT: {
         name: "About",
-        pageComponent: AboutPage
+        pathname: "/about",
+        PageComponent: AboutPage
     },
     CONTACT: {
         name: "Contact",
-        pageComponent: ContactPage
+        pathname: "/contact",
+        PageComponent: ContactPage
     }
 };
 
