@@ -5,6 +5,7 @@ import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
 import Select from 'react-select';
 import Switch from 'react-switch';
+import { Icon } from '@iconify/react';
 import { ArrowLeft, ArrowRight } from 'react-bootstrap-icons';
 import './SearchBox.css';
 import {
@@ -15,7 +16,7 @@ import {
 } from './constants';
 
 function getCurrencySearchOption(currencies, abbreviation) {
-    const name = currencies[abbreviation];
+    const {name} = currencies[abbreviation];
     
     return {
         value: abbreviation,
@@ -62,15 +63,6 @@ function SearchBox(props) {
 
     const isTransactionTypeSwitchChecked = () => {
         return props.transactionType === transactionTypes.SELL;
-    }
-
-    const onAmountChange = (e) => {
-        if (props.searchType === searchTypes.BUDGET) {
-            props.onBudgetChange(e.target.value);
-        }
-        else {
-            props.onBaseAmountChange(e.target.value);
-        }
     }
 
     return (
@@ -127,12 +119,16 @@ function SearchBox(props) {
                                 </Form.Label>
                                 <InputGroup>
                                     <InputGroup.Prepend>
-                                        <InputGroup.Text>$</InputGroup.Text>
+                                        <InputGroup.Text>
+                                            <Icon
+                                                icon={baseCurrencies[props.baseCurrency].icon}
+                                            />
+                                        </InputGroup.Text>
                                     </InputGroup.Prepend>
                                     <Form.Control
                                         id="amountInput"
                                         value={props.amount}
-                                        onChange={onAmountChange}
+                                        onChange={(e) => props.onAmountChange(e.target.value)}
                                     />
                                 </InputGroup>
                             </Col>

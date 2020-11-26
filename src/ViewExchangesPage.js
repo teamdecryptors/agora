@@ -18,8 +18,7 @@ function ViewExchangesPage(props) {
     const [searchType, setSearchType] = useState(searchTypes.BUDGET);
     const [baseCurrency, setBaseCurrency] = useState(defaultBaseCurrency);
     const [quoteCurrency, setQuoteCurrency] = useState(defaultQuoteCurrency);
-    const [budget, setBudget] = useState(0);
-    const [baseAmount, setBaseAmount] = useState(0);
+    const [amount, setAmount] = useState(0);
     const [transactionType, setTransactionType] =
         useState(transactionTypes.BUY);
 
@@ -31,12 +30,8 @@ function ViewExchangesPage(props) {
         setQuoteCurrency(currency);
     };
 
-    const onSearchBoxBudgetChange = (amount) => {
-        setBudget(amount);
-    };
-
-    const onSearchBoxBaseAmountChange = (amount) => {
-        setBaseAmount(amount);
+    const onSearchBoxAmountChange = (amount) => {
+        setAmount(amount);
     };
 
     const onSearchBoxTransactionTypeChange = (type) => {
@@ -76,10 +71,8 @@ function ViewExchangesPage(props) {
                 onBaseCurrencyChange={onSearchBoxBaseCurrencyChange}
                 quoteCurrency={quoteCurrency}
                 onQuoteCurrencyChange={onSearchBoxQuoteCurrencyChange}
-                onBudgetChange={onSearchBoxBudgetChange}
-                onBaseAmountChange={onSearchBoxBaseAmountChange}
-                amount={searchType === searchTypes.BUDGET ? 
-                    budget : baseAmount}
+                amount={amount}
+                onAmountChange={onSearchBoxAmountChange}
                 transactionType={transactionType}
                 onTransactionTypeChange={onSearchBoxTransactionTypeChange}
                 searchType={searchType}
