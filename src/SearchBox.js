@@ -1,10 +1,15 @@
 import Form from 'react-bootstrap/Form';
+import InputGroup from 'react-bootstrap/InputGroup';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
-import { quoteCurrencies, baseCurrencies, searchTypes } from './constants';
 import Select from 'react-select';
 import './SearchBox.css';
+import {
+    quoteCurrencies,
+    baseCurrencies,
+    searchTypes
+} from './constants';
 
 function getCurrencySearchOptions(currencies) {
     return Object.entries(currencies).map(
@@ -16,8 +21,10 @@ function getCurrencySearchOptions(currencies) {
 }
 
 function SearchBox(props) {
-    const quoteCurrencySearchOptions = getCurrencySearchOptions(quoteCurrencies);
-    const baseCurrencySearchOptions = getCurrencySearchOptions(baseCurrencies);
+    const quoteCurrencySearchOptions = 
+        getCurrencySearchOptions(quoteCurrencies);
+    const baseCurrencySearchOptions = 
+        getCurrencySearchOptions(baseCurrencies);
 
     const isBudgetSearch = props.searchType === searchTypes.BUDGET;
 
@@ -26,6 +33,15 @@ function SearchBox(props) {
     const budgetLabelColumnSize = isBudgetSearch ? 4 : 2;
     const budgetInputColumnSize = isBudgetSearch ? 2 : 2;
     const transactionTypeSwitchColumnSize = 2;
+
+    const currencySelectorTheme = (theme) => ({
+        ...theme,
+        colors: {
+            ...theme.colors,
+            primary25: '#CCF4C8',
+            primary: '#7EEC73',
+        }
+    });
 
     return (
         <>
@@ -51,29 +67,42 @@ function SearchBox(props) {
                         <Form.Row className="align-items-center">
                             <Col xs={quoteCurrencyColumnSize}>
                                 <Select
-                                    defaultValue={quoteCurrencySearchOptions[0]}
+                                    defaultValue={
+                                        quoteCurrencySearchOptions[0]
+                                    }
                                     options={quoteCurrencySearchOptions}
+                                    theme={currencySelectorTheme}
                                 />
                             </Col>
                             {
                                 !isBudgetSearch && 
                                 <Col xs={baseCurrencyColumnSize}>
                                     <Select
-                                        defaultValue={baseCurrencySearchOptions[0]}
+                                        defaultValue={
+                                            baseCurrencySearchOptions[0]
+                                        }
                                         options={baseCurrencySearchOptions}
+                                        theme={currencySelectorTheme}
                                     />
                                 </Col>
                             }
                             <Col xs={budgetInputColumnSize}>
-                                <Form.Control placeholder="$" id="budgetInput" />
+                                <InputGroup>
+                                    <InputGroup.Prepend>
+                                        <InputGroup.Text>$</InputGroup.Text>
+                                    </InputGroup.Prepend>
+                                    <Form.Control id="budgetInput" />
+                                </InputGroup>
                             </Col>
                             <Col xs={transactionTypeSwitchColumnSize}>
                                 <Form.Row className="justify-content-center">
-                                    <Form.Label className="pr-2">Buy</Form.Label>
+                                    <Form.Label className="pr-2">
+                                        Buy
+                                    </Form.Label>
                                     <Form.Check 
                                         type="switch"
                                         id="transactionTypeSwitch"
-                                        data-onstyle="dark"
+                                        className="shadow-none"
                                     />
                                     <Form.Label>Sell</Form.Label>
                                 </Form.Row>
@@ -84,7 +113,7 @@ function SearchBox(props) {
             </Row>
             <Row>
                 <Col className="text-center">
-                    <Button id="searchButton">GO</Button>
+                    <Button id="searchButton">Search</Button>
                 </Col>
             </Row>
         </>
