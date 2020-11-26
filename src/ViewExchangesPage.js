@@ -4,10 +4,44 @@ import Col from 'react-bootstrap/Col';
 import ToggleButtonGroup from 'react-bootstrap/ToggleButtonGroup';
 import ToggleButton from 'react-bootstrap/ToggleButton';
 import SearchBox from './SearchBox';
-import { searchTypes } from './constants';
+import { 
+    searchTypes,
+    baseCurrencies,
+    quoteCurrencies,
+    transactionTypes
+} from './constants';
 
 function ViewExchangesPage(props) {
+    const defaultBaseCurrency = Object.keys(baseCurrencies)[0];
+    const defaultQuoteCurrency = Object.keys(quoteCurrencies)[0];
+
     const [searchType, setSearchType] = useState(searchTypes.BUDGET);
+    const [baseCurrency, setBaseCurrency] = useState(defaultBaseCurrency);
+    const [quoteCurrency, setQuoteCurrency] = useState(defaultQuoteCurrency);
+    const [budget, setBudget] = useState(0);
+    const [baseAmount, setBaseAmount] = useState(0);
+    const [transactionType, setTransactionType] =
+        useState(transactionTypes.BUY);
+
+    const onSearchBoxBaseCurrencyChange = (currency) => {
+        setBaseCurrency(currency);
+    };
+
+    const onSearchBoxQuoteCurrencyChange = (currency) => {
+        setQuoteCurrency(currency);
+    };
+
+    const onSearchBoxBudgetChange = (amount) => {
+        setBudget(amount);
+    };
+
+    const onSearchBoxBaseAmountChange = (amount) => {
+        setBaseAmount(amount);
+    };
+
+    const onSearchBoxTransactionTypeChange = (type) => {
+        setTransactionType(type);
+    }
 
     return (
         <>
@@ -22,6 +56,7 @@ function ViewExchangesPage(props) {
                             variant="secondary"
                             value={searchTypes.BUDGET}
                             onClick={() => setSearchType(searchTypes.BUDGET)}
+                            className="shadow-none"
                         >
                             What can I buy with my budget?
                         </ToggleButton>
@@ -29,13 +64,26 @@ function ViewExchangesPage(props) {
                             variant="secondary"
                             value={searchTypes.PAIR}
                             onClick={() => setSearchType(searchTypes.PAIR)}
+                            className="shadow-none"
                         >
                             I know which pairing I want!
                         </ToggleButton>
                     </ToggleButtonGroup>
                 </Col>
             </Row>
-            <SearchBox searchType={searchType} />
+            <SearchBox
+                baseCurrency={baseCurrency}
+                onBaseCurrencyChange={onSearchBoxBaseCurrencyChange}
+                quoteCurrency={quoteCurrency}
+                onQuoteCurrencyChange={onSearchBoxQuoteCurrencyChange}
+                onBudgetChange={onSearchBoxBudgetChange}
+                onBaseAmountChange={onSearchBoxBaseAmountChange}
+                amount={searchType === searchTypes.BUDGET ? 
+                    budget : baseAmount}
+                transactionType={transactionType}
+                onTransactionTypeChange={onSearchBoxTransactionTypeChange}
+                searchType={searchType}
+            />
         </>
     );
 }

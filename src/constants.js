@@ -62,3 +62,8 @@ export const searchTypes = {
     BUDGET: "budget",
     PAIR: "pair"
 };
+
+export const transactionTypes = {
+    BUY: "buy",
+    SELL: "sell"
+};

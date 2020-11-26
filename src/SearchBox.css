@@ -5,10 +5,6 @@
     padding: 20px 20px 40px 20px;
 }
 
-.custom-switch:active {
-    border: none;
-}
-
 .custom-switch .custom-control-label::before {
     background-color: #E2E2E2 !important;
     border: none;
