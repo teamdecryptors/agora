@@ -4,6 +4,7 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
 import Select from 'react-select';
+import Switch from 'react-switch';
 import { ArrowLeft, ArrowRight } from 'react-bootstrap-icons';
 import './SearchBox.css';
 import {
@@ -50,9 +51,7 @@ function SearchBox(props) {
         }
     });
 
-    const onTransactionTypeChange = (e) => {
-        const checked = e.target.checked;
-
+    const onTransactionTypeChange = (checked) => {
         // checked === true means toggle in right (sell) position
         const transactionType = checked ?
             transactionTypes.SELL :
@@ -142,15 +141,25 @@ function SearchBox(props) {
                                     <Form.Label className="pr-2">
                                         Buy
                                     </Form.Label>
-                                    <Form.Check 
-                                        type="switch"
+                                    <Switch
                                         id="transactionTypeSwitch"
                                         onChange={onTransactionTypeChange}
                                         checked={
                                             isTransactionTypeSwitchChecked()
                                         }
+                                        handleDiameter={28}
+                                        height={20}
+                                        width={48}
+                                        onColor="#E2E2E2"
+                                        offColor="#E2E2E2"
+                                        uncheckedIcon={false}
+                                        checkedIcon={false}
+                                        onHandleColor="#7EEC73"
+                                        offHandleColor="#7EEC73"
+                                        boxShadow="0px 1px 5px rgba(0, 0, 0, 0.6)"
+                                        activeBoxShadow="0px 0px 1px 5px rgba(0, 0, 0, 0.2)"
                                     />
-                                    <Form.Label>Sell</Form.Label>
+                                    <Form.Label className="pl-2">Sell</Form.Label>
                                 </Form.Row>
                             </Col>
                         </Form.Row>
