@@ -38,8 +38,8 @@ function SearchBox(props) {
 
     const isBudgetSearch = props.searchType === searchTypes.BUDGET;
 
-    const baseCurrencyColumnSize = isBudgetSearch ? 8 : 4;
-    const quoteCurrencyColumnSize = 4;
+    const baseCurrencyColumnSize = 4;
+    const quoteCurrencyColumnSize = isBudgetSearch ? 8 : 4;
     const arrowColumnSize = "auto";
     const amountColumnSize = 2;
 
@@ -65,29 +65,35 @@ function SearchBox(props) {
         return props.transactionType === transactionTypes.SELL;
     }
 
+    const getAmountInputIcon = () => {
+        return isBudgetSearch ?
+            quoteCurrencies[props.quoteCurrency].icon :
+            baseCurrencies[props.baseCurrency].icon
+    }
+
     return (
         <>
             <Row>
                 <Col>
                     <Form id="searchBox">
                         <Form.Row className="align-items-end">
-                            <Col xs={baseCurrencyColumnSize}>
-                                <Form.Label>Base Currency</Form.Label>
-                                <Select
-                                    defaultValue={
-                                        getCurrencySearchOption(
-                                            baseCurrencies,
-                                            props.baseCurrency
-                                        )
-                                    }
-                                    options={baseCurrencySearchOptions}
-                                    theme={currencySelectorTheme}
-                                    onChange={(e) => props.onBaseCurrencyChange(e.value)}
-                                />
-                            </Col>
                             {
                                 !isBudgetSearch &&
                                 <>
+                                    <Col xs={baseCurrencyColumnSize}>
+                                        <Form.Label>Base Currency</Form.Label>
+                                        <Select
+                                            defaultValue={
+                                                getCurrencySearchOption(
+                                                    baseCurrencies,
+                                                    props.baseCurrency
+                                                )
+                                            }
+                                            options={baseCurrencySearchOptions}
+                                            theme={currencySelectorTheme}
+                                            onChange={(e) => props.onBaseCurrencyChange(e.value)}
+                                        />
+                                    </Col>
                                     <Col xs={arrowColumnSize} className="text-center">
                                         <Form.Label>
                                             {
@@ -97,22 +103,22 @@ function SearchBox(props) {
                                             }
                                         </Form.Label>
                                     </Col>
-                                    <Col xs={quoteCurrencyColumnSize}>
-                                        <Form.Label>Quote Currency</Form.Label>
-                                        <Select
-                                            defaultValue={
-                                                getCurrencySearchOption(
-                                                    quoteCurrencies,
-                                                    props.quoteCurrency
-                                                )
-                                            }
-                                            options={quoteCurrencySearchOptions}
-                                            theme={currencySelectorTheme}
-                                            onChange={(e) => props.onQuoteCurrencyChange(e.value)}
-                                        />
-                                    </Col>
                                 </>
                             }
+                            <Col xs={quoteCurrencyColumnSize}>
+                                <Form.Label>Quote Currency</Form.Label>
+                                <Select
+                                    defaultValue={
+                                        getCurrencySearchOption(
+                                            quoteCurrencies,
+                                            props.quoteCurrency
+                                        )
+                                    }
+                                    options={quoteCurrencySearchOptions}
+                                    theme={currencySelectorTheme}
+                                    onChange={(e) => props.onQuoteCurrencyChange(e.value)}
+                                />
+                            </Col>
                             <Col xs={amountColumnSize}>
                                 <Form.Label>
                                     {isBudgetSearch ? "Budget" : "Base Amount"}
@@ -121,7 +127,7 @@ function SearchBox(props) {
                                     <InputGroup.Prepend>
                                         <InputGroup.Text>
                                             <Icon
-                                                icon={baseCurrencies[props.baseCurrency].icon}
+                                                icon={getAmountInputIcon()}
                                             />
                                         </InputGroup.Text>
                                     </InputGroup.Prepend>
