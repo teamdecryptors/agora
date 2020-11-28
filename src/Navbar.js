@@ -3,6 +3,7 @@ import Nav from 'react-bootstrap/Nav';
 import BootstrapNavbar from 'react-bootstrap/Navbar';
 import { LinkContainer } from 'react-router-bootstrap'
 import { pages } from './constants';
+import logo from './logo.svg';
 
 function Navbar(props) {
     return (
