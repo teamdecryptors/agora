@@ -20,7 +20,7 @@ function Navbar(props) {
                     Object.entries(pages).map(([key, {name, pathname}]) => (
                         <LinkContainer to={pathname} key={key} exact>
                             <Nav.Link
-                                onClick={() => {props.onLinkClick(name)}}
+                                onClick={() => {props.onLinkClick(key)}}
                                 style={{ marginRight: 10 }}
                             >
                                 {name}

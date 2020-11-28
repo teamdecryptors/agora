@@ -174,6 +174,7 @@ function SearchBox(props) {
                     <Button
                         id="searchButton"
                         className="shadow-none"
+                        onClick={props.onSearchButtonClick}
                     >
                         View Trade Options
                     </Button>

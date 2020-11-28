@@ -11,16 +11,16 @@ import {
 } from "react-router-dom";
 
 function App() {
-  const [currentPageName, setCurrentPageName] = 
-    useState(pages.EXCHANGES.name);
+  const [currentPage, setCurrentPage] = 
+    useState(pages.EXCHANGES);
 
-  const onNavbarLinkClick = (newPageName) => {
-    setCurrentPageName(newPageName);
+  const onNavbarLinkClick = (page) => {
+    setCurrentPage(pages[page]);
   };
 
   useEffect(() => {
-    document.title = "agora - " + currentPageName;
-  }, [currentPageName]);
+    document.title = "agora - " + currentPage.name;
+  }, [currentPage]);
 
   return (
     <Router>
