@@ -6,9 +6,12 @@ import { pages } from './constants';
 
 function Navbar(props) {
     return (
-        <BootstrapNavbar bg="dark" variant="dark">
+        <BootstrapNavbar bg="dark" variant="dark" fixed="top">
             <BootstrapNavbar.Brand>
-                agora
+                <img src={logo} alt="logo" width="40" height="40"/>
+            </BootstrapNavbar.Brand>
+            <BootstrapNavbar.Brand>
+                a g o r a
             </BootstrapNavbar.Brand>
             <Nav className="ml-auto">
                 {
