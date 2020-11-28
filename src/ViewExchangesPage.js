@@ -53,22 +53,6 @@ function ViewExchangesPage(props) {
 
     const shouldMoveSearchBoxToTop = searchResults.length > 0;
 
-    const onSearchBoxBaseCurrencyChange = (currency) => {
-        setBaseCurrency(currency);
-    };
-
-    const onSearchBoxQuoteCurrencyChange = (currency) => {
-        setQuoteCurrency(currency);
-    };
-
-    const onSearchBoxAmountChange = (amount) => {
-        setAmount(amount);
-    };
-
-    const onSearchBoxTransactionTypeChange = (type) => {
-        setTransactionType(type);
-    };
-
     const onSearchBoxSearchButtonClick = () => {
         // Temporary
         setSearchResults(searchResults + [1]);
@@ -119,13 +103,13 @@ function ViewExchangesPage(props) {
                 </Row>
                 <SearchBox
                     baseCurrency={baseCurrency}
-                    onBaseCurrencyChange={onSearchBoxBaseCurrencyChange}
+                    onBaseCurrencyChange={setBaseCurrency}
                     quoteCurrency={quoteCurrency}
-                    onQuoteCurrencyChange={onSearchBoxQuoteCurrencyChange}
+                    onQuoteCurrencyChange={setQuoteCurrency}
                     amount={amount}
-                    onAmountChange={onSearchBoxAmountChange}
+                    onAmountChange={setAmount}
                     transactionType={transactionType}
-                    onTransactionTypeChange={onSearchBoxTransactionTypeChange}
+                    onTransactionTypeChange={setTransactionType}
                     searchType={searchType}
                     onSearchButtonClick={onSearchBoxSearchButtonClick}
                 />
