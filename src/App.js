@@ -14,17 +14,13 @@ function App() {
   const [currentPage, setCurrentPage] = 
     useState(pages.EXCHANGES);
 
-  const onNavbarLinkClick = (page) => {
-    setCurrentPage(pages[page]);
-  };
-
   useEffect(() => {
     document.title = "agora - " + currentPage.name;
   }, [currentPage]);
 
   return (
     <Router>
-      <Navbar onLinkClick={onNavbarLinkClick} />
+      <Navbar onLinkClick={setCurrentPage} />
 
       <Container>
         <Switch>

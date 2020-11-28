@@ -17,16 +17,20 @@ function Navbar(props) {
             </p>
             <Nav className="ml-auto">
                 {
-                    Object.entries(pages).map(([key, {name, pathname}]) => (
-                        <LinkContainer to={pathname} key={key} exact>
-                            <Nav.Link
-                                onClick={() => {props.onLinkClick(key)}}
-                                style={{ marginRight: 10 }}
-                            >
-                                {name}
-                            </Nav.Link>
-                        </LinkContainer>
-                    ))
+                    Object.entries(pages).map(([key, value]) => {
+                        const {name, pathname} = value
+
+                        return (
+                            <LinkContainer to={pathname} key={key} exact>
+                                <Nav.Link
+                                    onClick={() => {props.onLinkClick(value)}}
+                                    style={{ marginRight: 10 }}
+                                >
+                                    {name}
+                                </Nav.Link>
+                            </LinkContainer>
+                        );
+                    })
                 }
             </Nav>
         </BootstrapNavbar>
