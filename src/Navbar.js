@@ -4,6 +4,7 @@ import BootstrapNavbar from 'react-bootstrap/Navbar';
 import { LinkContainer } from 'react-router-bootstrap'
 import { pages } from './constants';
 import logo from './logo.svg';
+import './Navbar.css';
 
 function Navbar(props) {
     return (
