@@ -1,0 +1,41 @@
+.qccBox {
+    margin-top: 20px;
+    background-color: #EDEDED;
+    padding: 20px;
+    padding-bottom: 10px;
+}
+
+.contactImage {
+    width: 150%;
+    height: auto;
+}
+
+.column{
+    float:left;
+    width: 50%;
+}
+
+.column1 {
+    float: left;
+    width: 70%;
+}
+
+.column2{
+    float: left;
+    width: 30%;
+}
+
+.row:after {
+content: "";
+display: table;
+clear: both;
+}
+
+a {
+    font-size: 5;
+    color: grey;
+}
+
+.contactForm {
+    width: 100%;
+}
