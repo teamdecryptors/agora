@@ -11,15 +11,16 @@ function Navbar(props) {
             <BootstrapNavbar.Brand>
                 <img src={logo} alt="logo" width="40" height="40"/>
             </BootstrapNavbar.Brand>
-            <BootstrapNavbar.Brand>
+            <p className="name">
                 a g o r a
-            </BootstrapNavbar.Brand>
+            </p>
             <Nav className="ml-auto">
                 {
                     Object.entries(pages).map(([key, {name, pathname}]) => (
                         <LinkContainer to={pathname} key={key} exact>
                             <Nav.Link
                                 onClick={() => {props.onLinkClick(name)}}
+                                style={{ marginRight: 10 }}
                             >
                                 {name}
                             </Nav.Link>
