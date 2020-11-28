@@ -1,0 +1,12 @@
+#searchTypeOptions > .btn {
+    border: 1px solid #B5B5B5;
+    border-bottom: none;
+}
+
+#searchTypeOptions > .btn:not(:last-child) {
+    border-bottom-left-radius: 0;
+}
+
+#searchTypeOptions > .btn:not(:first-child) {
+    border-bottom-right-radius: 0;
+}

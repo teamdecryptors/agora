@@ -10,12 +10,13 @@ import {
     quoteCurrencies,
     transactionTypes
 } from './constants';
+import './ViewExchangesPage.css';
 
 function ViewExchangesPage(props) {
-    const defaultBaseCurrency = Object.keys(baseCurrencies)[0];
-    const defaultQuoteCurrency = Object.keys(quoteCurrencies)[0];
+    const defaultBaseCurrency = baseCurrencies[0];
+    const defaultQuoteCurrency = quoteCurrencies[0];
 
-    const [searchType, setSearchType] = useState(searchTypes.BUDGET);
+    const [searchType, setSearchType] = useState(searchTypes.QUOTE_AMOUNT);
     const [baseCurrency, setBaseCurrency] = useState(defaultBaseCurrency);
     const [quoteCurrency, setQuoteCurrency] = useState(defaultQuoteCurrency);
     const [amount, setAmount] = useState(0);
@@ -45,18 +46,23 @@ function ViewExchangesPage(props) {
                     <ToggleButtonGroup
                         type="radio"
                         name="searchTypeOptions"
-                        defaultValue={searchTypes.BUDGET}
+                        id="searchTypeOptions"
+                        defaultValue={searchTypes.QUOTE_AMOUNT}
                     >
                         <ToggleButton
-                            variant="secondary"
-                            value={searchTypes.BUDGET}
-                            onClick={() => setSearchType(searchTypes.BUDGET)}
+                            variant="outline-secondary"
+                            value={searchTypes.QUOTE_AMOUNT}
+                            onClick={() => setSearchType(searchTypes.QUOTE_AMOUNT)}
                             className="shadow-none"
                         >
-                            What can I buy with my budget?
+                            {
+                                transactionType === transactionTypes.BUY ?
+                                    "What can I buy with my budget?" :
+                                    "What should I sell to get this amount?"
+                            }
                         </ToggleButton>
                         <ToggleButton
-                            variant="secondary"
+                            variant="outline-secondary"
                             value={searchTypes.PAIR}
                             onClick={() => setSearchType(searchTypes.PAIR)}
                             className="shadow-none"

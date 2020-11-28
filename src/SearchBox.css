@@ -5,25 +5,19 @@
     padding: 20px 20px 40px 20px;
 }
 
-.custom-switch .custom-control-label::before {
-    background-color: #E2E2E2 !important;
-    border: none;
-}
-
-.custom-switch .custom-control-label::after {
-    background-color: #7EEC73 !important;
-}
-
 #searchButton {
     background-color:  #7EEC73;
     border: none;
     border-radius: 20px;
-    width: 5em;
     position: relative;
     top: -50%;
 }
 
-.form-control:focus {
+#searchButton:hover {
+    background-color: #70cf67;
+}
+
+#searchBox .form-control:focus {
     border: 2px solid #7EEC73;
     box-shadow: none;
-} 
+}

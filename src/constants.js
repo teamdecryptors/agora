@@ -52,22 +52,15 @@ export const pages = {
     }
 };
 
-export const quoteCurrencies = {
+export const currencies = {
     USD: {
         name: "US Dollar",
         icon: usdIcon
     },
-    BTC: {
-        name: "Bitcoin",
-        icon: btcIcon
-    },
     EUR: {
         name: "Euro",
         icon: eurIcon
-    }
-};
-
-export const baseCurrencies = {
+    },
     BTC: {
         name: "Bitcoin",
         icon: btcIcon
@@ -138,8 +131,15 @@ export const baseCurrencies = {
     }
 };
 
+export const quoteCurrencies = ["USD", "BTC", "EUR"];
+
+export const baseCurrencies = [
+    "BTC", "ETH", "LTC", "XRP", "ZEC", "XLM", "LINK", "BCH", "XMR", "USDT", 
+    "DOT", "EOS", "TRX", "ADA", "DASH", "XTZ", "USDC"
+];
+    
 export const searchTypes = {
-    BUDGET: "budget",
+    QUOTE_AMOUNT: "quote",
     PAIR: "pair"
 };
 

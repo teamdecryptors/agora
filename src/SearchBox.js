@@ -9,13 +9,14 @@ import { Icon } from '@iconify/react';
 import { ArrowLeft, ArrowRight } from 'react-bootstrap-icons';
 import './SearchBox.css';
 import {
+    currencies,
     quoteCurrencies,
     baseCurrencies,
     searchTypes,
     transactionTypes
 } from './constants';
 
-function getCurrencySearchOption(currencies, abbreviation) {
+function getCurrencySearchOption(abbreviation) {
     const {name} = currencies[abbreviation];
     
     return {
@@ -24,22 +25,17 @@ function getCurrencySearchOption(currencies, abbreviation) {
     };
 }
 
-function getCurrencySearchOptions(currencies) {
-    return Object.keys(currencies).map(
-        (abbreviation) => getCurrencySearchOption(currencies, abbreviation)
-    );
-}
-
 function SearchBox(props) {
-    const quoteCurrencySearchOptions = 
-        getCurrencySearchOptions(quoteCurrencies);
-    const baseCurrencySearchOptions = 
-        getCurrencySearchOptions(baseCurrencies);
+    const quoteCurrencySearchOptions = quoteCurrencies.map((abbreviation) => 
+        getCurrencySearchOption(abbreviation))
+    const baseCurrencySearchOptions = baseCurrencies.map((abbreviation) => 
+        getCurrencySearchOption(abbreviation));
 
-    const isBudgetSearch = props.searchType === searchTypes.BUDGET;
+    const isQuoteAmountSearch = props.searchType === searchTypes.QUOTE_AMOUNT;
+    const isBuyTransaction = props.transactionType === transactionTypes.BUY;
 
     const baseCurrencyColumnSize = 4;
-    const quoteCurrencyColumnSize = isBudgetSearch ? 8 : 4;
+    const quoteCurrencyColumnSize = isQuoteAmountSearch ? 8 : 4;
     const arrowColumnSize = "auto";
     const amountColumnSize = 2;
 
@@ -61,14 +57,29 @@ function SearchBox(props) {
         props.onTransactionTypeChange(transactionType);
     };
 
-    const isTransactionTypeSwitchChecked = () => {
-        return props.transactionType === transactionTypes.SELL;
+    const getAmountInputIcon = () => {
+        const currency = isQuoteAmountSearch ? 
+            props.quoteCurrency : props.baseCurrency;
+
+        return currencies[currency].icon;
     }
 
-    const getAmountInputIcon = () => {
-        return isBudgetSearch ?
-            quoteCurrencies[props.quoteCurrency].icon :
-            baseCurrencies[props.baseCurrency].icon
+    const getAmountInputLabel = () => {
+        let label = "";
+
+        if (isQuoteAmountSearch) {
+            if (isBuyTransaction) {
+                label = "Budget";
+            }
+            else {
+                label = "Amount";
+            }
+        }
+        else {
+            label = "Base Amount";
+        }
+
+        return label;
     }
 
     return (
@@ -78,16 +89,13 @@ function SearchBox(props) {
                     <Form id="searchBox">
                         <Form.Row className="align-items-end">
                             {
-                                !isBudgetSearch &&
+                                !isQuoteAmountSearch &&
                                 <>
                                     <Col xs={baseCurrencyColumnSize}>
                                         <Form.Label>Base Currency</Form.Label>
                                         <Select
                                             defaultValue={
-                                                getCurrencySearchOption(
-                                                    baseCurrencies,
-                                                    props.baseCurrency
-                                                )
+                                                getCurrencySearchOption(props.baseCurrency)
                                             }
                                             options={baseCurrencySearchOptions}
                                             theme={currencySelectorTheme}
@@ -97,9 +105,9 @@ function SearchBox(props) {
                                     <Col xs={arrowColumnSize} className="text-center">
                                         <Form.Label>
                                             {
-                                                props.transactionType === transactionTypes.BUY ?
-                                                <ArrowLeft /> :
-                                                <ArrowRight />
+                                                isBuyTransaction ?
+                                                    <ArrowLeft /> :
+                                                    <ArrowRight />
                                             }
                                         </Form.Label>
                                     </Col>
@@ -109,10 +117,7 @@ function SearchBox(props) {
                                 <Form.Label>Quote Currency</Form.Label>
                                 <Select
                                     defaultValue={
-                                        getCurrencySearchOption(
-                                            quoteCurrencies,
-                                            props.quoteCurrency
-                                        )
+                                        getCurrencySearchOption(props.quoteCurrency)
                                     }
                                     options={quoteCurrencySearchOptions}
                                     theme={currencySelectorTheme}
@@ -121,14 +126,12 @@ function SearchBox(props) {
                             </Col>
                             <Col xs={amountColumnSize}>
                                 <Form.Label>
-                                    {isBudgetSearch ? "Budget" : "Base Amount"}
+                                    { getAmountInputLabel() }
                                 </Form.Label>
                                 <InputGroup>
                                     <InputGroup.Prepend>
                                         <InputGroup.Text>
-                                            <Icon
-                                                icon={getAmountInputIcon()}
-                                            />
+                                            <Icon icon={getAmountInputIcon()} />
                                         </InputGroup.Text>
                                     </InputGroup.Prepend>
                                     <Form.Control
@@ -146,9 +149,7 @@ function SearchBox(props) {
                                     <Switch
                                         id="transactionTypeSwitch"
                                         onChange={onTransactionTypeChange}
-                                        checked={
-                                            isTransactionTypeSwitchChecked()
-                                        }
+                                        checked={!isBuyTransaction}
                                         handleDiameter={28}
                                         height={20}
                                         width={48}
@@ -174,7 +175,7 @@ function SearchBox(props) {
                         id="searchButton"
                         className="shadow-none"
                     >
-                        Search
+                        View Trade Options
                     </Button>
                 </Col>
             </Row>
