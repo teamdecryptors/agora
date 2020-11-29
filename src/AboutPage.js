@@ -3,31 +3,7 @@ import AboutPageProfile from './AboutPageProfile';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
-import { names, roles, bios } from './constants';
-import vicente_headshot from './headshots/vicente_headshot.png';
-import yishai_headshot from './headshots/yishai_headshot.png';
-import jason_headshot from './headshots/jason_headshot.png';
-import jessica_headshot from './headshots/jessica_headshot.png';
-import andrew_headshot from './headshots/andrew_headshot.png';
-import juan_headshot from './headshots/juan_headshot.png';
-import nick_headshot from './headshots/nick_headshot.png';
-import advik_headshot from './headshots/advik_headshot.png';
-import varun_headshot from './headshots/varun_headshot.png';
-import mark_headshot from './headshots/mark_headshot.png';
-import daniel_headshot from './headshots/daniel_headshot.png';
-
-
-console.log(vicente_headshot);
-console.log(yishai_headshot);
-console.log(jason_headshot);
-console.log(jessica_headshot);
-console.log(andrew_headshot);
-console.log(juan_headshot);
-console.log(nick_headshot);
-console.log(advik_headshot);
-console.log(varun_headshot);
-console.log(mark_headshot);
-console.log(daniel_headshot);
+import { teamMembers } from './constants';
 
 
 function AboutPage(props) {
@@ -49,100 +25,100 @@ function AboutPage(props) {
                 <br/>
                 <Row>
                     <Col>
-                        <img src={vicente_headshot} alt="Vicente" width={300} height={390}/>
+                        <img src={teamMembers.Vicente.headshot} alt="Vicente" width={300} height={390}/>
                     </Col>
                     <Col>
-                        <AboutPageProfile name={names.Vicente} role={roles.PM} bio={bios.vicente_bio}/>
-                    </Col>
-                </Row>
-                <br/>
-                <Row>
-                    <Col>
-                        <AboutPageProfile name={names.Varun} role={roles.BA} bio={bios.varun_bio}/>
-                    </Col>
-                    <Col>
-                        <img src={varun_headshot} alt="Varun" width={300} height={390}/>
+                        <AboutPageProfile name={teamMembers.Vicente.fullName} role={teamMembers.Vicente.role} bio={teamMembers.Vicente.bio}/>
                     </Col>
                 </Row>
                 <br/>
                 <Row>
                     <Col>
-                        <img src={advik_headshot} alt="Advik" width={300} height={390}/>
+                        <AboutPageProfile name={teamMembers.Varun.fullName} role={teamMembers.Varun.role} bio={teamMembers.Varun.bio}/>
                     </Col>
                     <Col>
-                        <AboutPageProfile name={names.Advik} role={roles.SSA} bio={bios.advik_bio}/>
-                    </Col>
-                </Row>
-                <br/>
-                <Row>
-                    <Col>
-                        <AboutPageProfile name={names.Nick} role={roles.SA} bio={bios.nick_bio}/>
-                    </Col>
-                    <Col>
-                        <img src={nick_headshot} alt="Nick" width={300} height={390}/>   
+                        <img src={teamMembers.Varun.headshot} alt="Varun" width={300} height={390}/>
                     </Col>
                 </Row>
                 <br/>
                 <Row>
                     <Col>
-                        <img src={yishai_headshot} alt="Yishai" width={300} height={390}/>
+                        <img src={teamMembers.Advik.headshot} alt="Advik" width={300} height={390}/>
                     </Col>
                     <Col>
-                        <AboutPageProfile name={names.Yishai} role={roles.SDL} bio={bios.yishai_bio}/>
+                        <AboutPageProfile name={teamMembers.Advik.fullName} role={teamMembers.Advik.role} bio={teamMembers.Advik.bio}/>
                     </Col>
                 </Row>
                 <br/>
                 <Row>
                     <Col>
-                        <AboutPageProfile name={names.Daniel} role={roles.DS} bio={bios.daniel_bio}/>
+                        <AboutPageProfile name={teamMembers.Nick.fullName} role={teamMembers.Nick.role} bio={teamMembers.Nick.bio}/>
                     </Col>
                     <Col>
-                        <img src={daniel_headshot} alt="Daniel" width={300} height={390}/>  
+                        <img src={teamMembers.Nick.headshot} alt="Nick" width={300} height={390}/>   
+                    </Col>
+                </Row>
+                <br/>
+                <Row>
+                    <Col>
+                        <img src={teamMembers.Yishai.headshot} alt="Yishai" width={300} height={390}/>
+                    </Col>
+                    <Col>
+                        <AboutPageProfile name={teamMembers.Yishai.fullName} role={teamMembers.Yishai.role} bio={teamMembers.Yishai.bio}/>
+                    </Col>
+                </Row>
+                <br/>
+                <Row>
+                    <Col>
+                        <AboutPageProfile name={teamMembers.Daniel.fullName} role={teamMembers.Daniel.role} bio={teamMembers.Daniel.bio}/>
+                    </Col>
+                    <Col>
+                        <img src={teamMembers.Daniel.headshot} alt="Daniel" width={300} height={390}/>  
                     </Col>
                 </Row> 
                 <br/>
                 <Row>
                     <Col>
-                        <img src={juan_headshot} alt="Juan" width={300} height={390}/>
+                        <img src={teamMembers.Juan.headshot} alt="Juan" width={300} height={390}/>
                     </Col>
                     <Col>
-                        <AboutPageProfile name={names.Juan} role={roles.DS} bio={bios.juan_bio}/>
+                        <AboutPageProfile name={teamMembers.Juan.fullName} role={teamMembers.Juan.role} bio={teamMembers.Juan.bio}/>
                     </Col>
                 </Row>
                 <br/>
                 <Row>
                 <Col>
-                    <AboutPageProfile name={names.Mark} role={roles.AS} bio={bios.mark_bio}/>
+                    <AboutPageProfile name={teamMembers.Mark.fullName} role={teamMembers.Mark.role} bio={teamMembers.Mark.bio}/>
                 </Col>
                 <Col>
-                    <img src={mark_headshot} alt="Mark" width={300} height={390}/>   
+                    <img src={teamMembers.Mark.headshot} alt="Mark" width={300} height={390}/>   
                 </Col>
                 </Row>
                 <br/>
                 <Row>
                     <Col>
-                        <img src={jason_headshot} alt="Jason" width={300} height={390}/>
+                        <img src={teamMembers.Jason.headshot} alt="Jason" width={300} height={390}/>
                     </Col>
                     <Col>
-                        <AboutPageProfile name={names.Jason} role={roles.UI} bio={bios.jason_bio}/>
-                    </Col>
-                </Row>
-                <br/>
-                <Row>
-                    <Col>
-                        <AboutPageProfile name={names.Andrew} role={roles.UI} bio={bios.andrew_bio}/>
-                    </Col>
-                    <Col>
-                        <img src={andrew_headshot} alt="Andrew" width={300} height={390}/>
+                        <AboutPageProfile name={teamMembers.Jason.fullName} role={teamMembers.Jason.role} bio={teamMembers.Jason.bio}/>
                     </Col>
                 </Row>
                 <br/>
                 <Row>
                     <Col>
-                        <img src={jessica_headshot} alt="Jessica" width={300} height={390}/>
+                        <AboutPageProfile name={teamMembers.Andrew.fullName} role={teamMembers.Andrew.role} bio={teamMembers.Andrew.bio}/>
                     </Col>
                     <Col>
-                        <AboutPageProfile name={names.Jessica} role={roles.QA} bio={bios.jessica_bio}/>
+                        <img src={teamMembers.Andrew.headshot} alt="Andrew" width={300} height={390}/>
+                    </Col>
+                </Row>
+                <br/>
+                <Row>
+                    <Col>
+                        <img src={teamMembers.Jessica.headshot} alt="Jessica" width={300} height={390}/>
+                    </Col>
+                    <Col>
+                        <AboutPageProfile name={teamMembers.Jessica.fullName} role={teamMembers.Jessica.role} bio={teamMembers.Jessica.bio}/>
                     </Col>
                 </Row>
                 <br/>
