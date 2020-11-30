@@ -4,6 +4,7 @@ import Col from 'react-bootstrap/Col';
 import ToggleButtonGroup from 'react-bootstrap/ToggleButtonGroup';
 import ToggleButton from 'react-bootstrap/ToggleButton';
 import SearchBox from './SearchBox';
+import ExchangeResult from './ExchangeResult';
 import { 
     searchTypes,
     baseCurrencies,
@@ -113,6 +114,7 @@ function ViewExchangesPage(props) {
                     searchType={searchType}
                     onSearchButtonClick={onSearchBoxSearchButtonClick}
                 />
+                <ExchangeResult exchangeName='FTX' buyOrSell='Buy' amount='4' baseCurrrency="BTC" quoteCurrency="USD" favorited={true}/>
             </Col>
         </Row>
     );
