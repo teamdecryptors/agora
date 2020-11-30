@@ -46,7 +46,7 @@ function ExchangeResult(props){
                     </Col>
                     <a href= { url } style={{color: 'black', textDecoration: 'none'}} target="_blank">
                     <Col style={{marginRight:270}}>
-                        <h4 style={{marginLeft:70, marginTop:15}}>{props.amount} {props.baseCurrency} <ArrowLeft/> 2940 {props.quoteCurrency}</h4>
+                        <h4 style={{marginLeft:70, marginTop:15}}>{props.amount} {props.baseCurrency} <ArrowLeft/> {props.price} {props.quoteCurrency}</h4>
                     </Col>
                     </a>
                     <button class="btn"><i><StarFill style={{fill: starColor}}  onClick={()=>{setColor(btnColor)}}/></i></button>

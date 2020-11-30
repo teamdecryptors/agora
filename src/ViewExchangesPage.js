@@ -11,6 +11,7 @@ import {
     transactionTypes
 } from './constants';
 import './ViewExchangesPage.css';
+import ExchangeResult from "./ExchangeResult";
 
 function moveSearchBoxToMiddle() {
     const viewExchangesPageWrapper = 
@@ -53,9 +54,30 @@ function ViewExchangesPage(props) {
 
     const shouldMoveSearchBoxToTop = searchResults.length > 0;
 
-    const onSearchBoxSearchButtonClick = () => {
+    const onSearchBoxSearchButtonClick = async () => {
+        let baseUrl = "https://hosting-test-1b355.web.app/api/offerings";
+
+        baseUrl = baseUrl + "/" + transactionType;
+        baseUrl = baseUrl + "/" + searchType;
+
+        if(searchType === searchTypes.QUOTE_AMOUNT) {
+            baseUrl = baseUrl + "/" + quoteCurrency;
+        }
+        else{
+            baseUrl = baseUrl + "/" + baseCurrency + "/" + quoteCurrency;
+        }
+
+        baseUrl = baseUrl + "/" + amount;
+
+        let response = await fetch(baseUrl);
+        let offerings = await response.json();
+
         // Temporary
-        setSearchResults(searchResults + [1]);
+        for (let offering of offerings.offerings) {
+            offering.TransactionType = transactionType;
+        }
+
+        setSearchResults(offerings.offerings);
     };
 
     useEffect(() => {
@@ -113,6 +135,20 @@ function ViewExchangesPage(props) {
                     searchType={searchType}
                     onSearchButtonClick={onSearchBoxSearchButtonClick}
                 />
+                {
+                    searchResults.length &&
+                        searchResults.map((result) => {
+                            return (
+                                <ExchangeResult
+                                    exchangeName={result.Exchange}
+                                    buyOrSell={result.TransactionType}
+                                    amount={result.Amount}
+                                    price={result.Price}
+                                    baseCurrency={result.CryptoCurrency}
+                                    quoteCurrency={result.Currency}
+                                />);
+                        })
+                }
             </Col>
         </Row>
     );
