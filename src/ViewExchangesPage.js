@@ -12,6 +12,7 @@ import {
 } from './constants';
 import './ViewExchangesPage.css';
 import ExchangeResult from "./ExchangeResult";
+import Collapsible from "./Collapsible";
 
 function moveSearchBoxToMiddle() {
     const viewExchangesPageWrapper = 
@@ -51,6 +52,7 @@ function ViewExchangesPage(props) {
     const [transactionType, setTransactionType] =
         useState(transactionTypes.BUY);
     const [searchResults, setSearchResults] = useState([]);
+    const searchResultBases = [];
 
     const shouldMoveSearchBoxToTop = searchResults.length > 0;
 
@@ -78,6 +80,15 @@ function ViewExchangesPage(props) {
         }
 
         setSearchResults(offerings.offerings);
+    };
+
+    const onToggleClick = () => {
+        if(searchType === searchTypes.QUOTE_AMOUNT){
+            setSearchType(searchTypes.PAIR);
+        }else{
+            setSearchType(searchTypes.QUOTE_AMOUNT);
+        }
+        setSearchResults(null);
     };
 
     useEffect(() => {
@@ -136,6 +147,7 @@ function ViewExchangesPage(props) {
                     onSearchButtonClick={onSearchBoxSearchButtonClick}
                 />
                 {
+                    searchType == searchTypes.PAIR &&
                     searchResults.length &&
                         searchResults.map((result) => {
                             return (
@@ -149,6 +161,36 @@ function ViewExchangesPage(props) {
                                 />);
                         })
                 }
+                {
+                    searchType == searchTypes.QUOTE_AMOUNT &&
+                    searchResults.length &&
+                        baseCurrencies.map((base) => {
+                            return(
+                                <Collapsible trigger={base}>
+                                    <div style={{width:'100%'}} class="content">
+                                        {   
+                                            searchResults.map((result) => {
+                                                
+                                                if(result.CryptoCurrency == base){
+                                                    return((
+                                                        <ExchangeResult
+                                                            exchangeName={result.Exchange}
+                                                            buyOrSell={result.TransactionType}
+                                                            amount={result.Amount}
+                                                            price={result.Price}
+                                                            baseCurrency={result.CryptoCurrency}
+                                                            quoteCurrency={result.Currency}
+                                                        />
+                                                    ));
+                                                }
+                                            })
+                                        }
+                                    </div>
+                                </Collapsible>
+                            );
+                        })
+                        
+                    }
             </Col>
         </Row>
     );
