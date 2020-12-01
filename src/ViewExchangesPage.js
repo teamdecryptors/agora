@@ -149,7 +149,7 @@ function ViewExchangesPage(props) {
                 />
                 {
                     searchType === searchTypes.PAIR &&
-                    searchResults.length &&
+                        searchResults.length > 0 &&
                         searchResults.map((result) => {
                             return (
                                 <ExchangeResult
@@ -165,7 +165,7 @@ function ViewExchangesPage(props) {
                 }
                 {
                     searchType === searchTypes.QUOTE_AMOUNT &&
-                    searchResults.length &&
+                        searchResults.length > 0 &&
                         baseCurrencies.map((base) => {
                             return(
                                 <Collapsible trigger={base}>
