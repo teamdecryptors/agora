@@ -84,9 +84,9 @@ function SearchBox(props) {
 
     return (
         <>
-            <Row>
+            <Row id="searchBox">
                 <Col>
-                    <Form id="searchBox">
+                    <Form>
                         <Form.Row className="align-items-end">
                             {
                                 !isQuoteAmountSearch &&
