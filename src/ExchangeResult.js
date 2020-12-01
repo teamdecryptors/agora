@@ -1,14 +1,25 @@
 import React, { useState, useMemo } from 'react';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import { ArrowLeft, StarFill } from 'react-bootstrap-icons';
-import { Exchanges, searchTypes } from './constants'
+import { ArrowLeft, StarFill, ArrowRight } from 'react-bootstrap-icons';
+import { Exchanges, searchTypes, transactionTypes } from './constants'
 import './ExchangeResult.css';
 
 function ExchangeResult(props){
     const exchange = props.exchangeName;
     const formalExchangeName = Exchanges[exchange].exchangeName;
     const url = Exchanges[exchange].link;
+    var arrow = '';
+    if (props.buyOrSell === transactionTypes.BUY){
+        arrow = <span className="mb-0 arrow align-self-center">
+        &nbsp; {<ArrowLeft size={25} />} &nbsp;
+        </span>
+    }
+    else{
+        arrow = <span className="mb-0 arrow align-self-center">
+        &nbsp; {<ArrowRight size={25} />} &nbsp;
+        </span>
+    }
     const [starColor, setColor] = useState('lightgray');
     const btnColor = useMemo(() => {
         return starColor === 'lightgray' ? 'gold' : 'lightgray';
@@ -61,9 +72,7 @@ function ExchangeResult(props){
                             <span className="mb-0 currency">
                                 {props.baseCurrency}
                             </span>
-                            <span className="mb-0 arrow align-self-center">
-                                &nbsp; <ArrowLeft size={25} /> &nbsp;
-                            </span>
+                            {arrow}
                             <span className="mb-0 amount">
                                 {props.price}
                             </span>
