@@ -12,7 +12,7 @@ import {
 } from './constants';
 import './ViewExchangesPage.css';
 import ExchangeResult from "./ExchangeResult";
-import Collapsible from "./Collapsible";
+import Collapsible from 'react-collapsible';
 
 function moveSearchBoxToMiddle() {
     const viewExchangesPageWrapper = 
