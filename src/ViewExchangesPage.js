@@ -57,7 +57,7 @@ function ViewExchangesPage(props) {
     const shouldMoveSearchBoxToTop = searchResults.length > 0;
 
     const onSearchBoxSearchButtonClick = async () => {
-        let baseUrl = "https://hosting-test-1b355.web.app/api/offerings";
+        let baseUrl = "https://agora.bid/api/offerings";
 
         baseUrl = baseUrl + "/" + transactionType;
         baseUrl = baseUrl + "/" + searchType;
