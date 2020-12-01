@@ -16,8 +16,8 @@ function ExchangeResult(props){
     const isQuoteAmountSearch = 
         props.searchType === searchTypes.QUOTE_AMOUNT;
     const resultClassesForSearchType = isQuoteAmountSearch ? 
-        "quoteAmountSearchResult" :
-        "pairSearchResult mb-2"
+        "result quoteAmountSearchResult" :
+        "result pairSearchResult mb-2"
 
     const onFavoriteButtonClick = (e) => {
         e.preventDefault();

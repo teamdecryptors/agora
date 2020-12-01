@@ -19,6 +19,10 @@
     text-decoration: none !important;
 }
 
+.result:hover {
+    background-color: #ece6e6;
+}
+
 .quoteAmountSearchResult {
 }
 
@@ -27,6 +31,5 @@
 }
 
 .resultLink:hover {
-    color: black;
-    background-color: #ece6e6;
+    color: #4F4F4F;
 }
