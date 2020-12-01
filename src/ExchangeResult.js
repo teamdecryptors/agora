@@ -10,7 +10,7 @@ function ExchangeResult(props){
     const formalExchangeName = Exchanges[exchange].exchangeName;
     const url = Exchanges[exchange].link;
     var arrow = '';
-    if (props.buyOrSell === transactionTypes.BUY){
+    if (props.transactionType === transactionTypes.BUY){
         arrow = <span className="mb-0 arrow align-self-center">
         &nbsp; {<ArrowLeft size={25} />} &nbsp;
         </span>

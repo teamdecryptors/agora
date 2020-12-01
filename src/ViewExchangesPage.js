@@ -154,7 +154,7 @@ function ViewExchangesPage(props) {
                             return (
                                 <ExchangeResult
                                     exchangeName={result.Exchange}
-                                    buyOrSell={result.TransactionType}
+                                    transactionType={result.TransactionType}
                                     amount={result.Amount}
                                     price={result.Price}
                                     baseCurrency={result.CryptoCurrency}
