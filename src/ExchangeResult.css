@@ -1,0 +1,35 @@
+.amount {
+    font-size: 2rem;
+}
+
+.arrow {
+    display: inline
+}
+
+.currency {
+    font-size: 1.5rem;
+}
+
+.favoriteButton {
+    cursor: pointer;
+}
+
+.resultLink {
+    color: #4F4F4F;
+    text-decoration: none !important;
+}
+
+.result:hover {
+    background-color: #ece6e6;
+}
+
+.quoteAmountSearchResult {
+}
+
+.pairSearchResult {
+    border: 1px solid #B5B5B5;
+}
+
+.resultLink:hover {
+    color: #4F4F4F;
+}

@@ -10,3 +10,25 @@
 #searchTypeOptions > .btn:not(:first-child) {
     border-bottom-right-radius: 0;
 }
+
+.Collapsible{
+    background-color: #B5B5B5;
+}
+
+.Collapsible__trigger{
+    display: block;
+    font-weight: 400;
+    text-decoration: none;
+    color: grey;
+    position: relative;
+    border: 1px solid white;
+    padding: 10px;
+    background: grey;
+    color: white;
+}
+
+.Collapsible__contentOuter{
+    background-color: #F9F9F9;
+    width: 100%;
+    padding-left: 10px;
+}

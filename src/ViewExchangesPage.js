@@ -4,7 +4,6 @@ import Col from 'react-bootstrap/Col';
 import ToggleButtonGroup from 'react-bootstrap/ToggleButtonGroup';
 import ToggleButton from 'react-bootstrap/ToggleButton';
 import SearchBox from './SearchBox';
-import ExchangeResult from './ExchangeResult';
 import { 
     searchTypes,
     baseCurrencies,
@@ -12,6 +11,8 @@ import {
     transactionTypes
 } from './constants';
 import './ViewExchangesPage.css';
+import ExchangeResult from "./ExchangeResult";
+import Collapsible from 'react-collapsible';
 
 function moveSearchBoxToMiddle() {
     const viewExchangesPageWrapper = 
@@ -51,13 +52,45 @@ function ViewExchangesPage(props) {
     const [transactionType, setTransactionType] =
         useState(transactionTypes.BUY);
     const [searchResults, setSearchResults] = useState([]);
+    // const searchResultBases = [];
 
     const shouldMoveSearchBoxToTop = searchResults.length > 0;
 
-    const onSearchBoxSearchButtonClick = () => {
+    const onSearchBoxSearchButtonClick = async () => {
+        let baseUrl = "https://agora.bid/api/offerings";
+
+        baseUrl = baseUrl + "/" + transactionType;
+        baseUrl = baseUrl + "/" + searchType;
+
+        if(searchType === searchTypes.QUOTE_AMOUNT) {
+            baseUrl = baseUrl + "/" + quoteCurrency;
+        }
+        else{
+            baseUrl = baseUrl + "/" + baseCurrency + "/" + quoteCurrency;
+        }
+
+        baseUrl = baseUrl + "/" + amount;
+
+        let response = await fetch(baseUrl);
+        let offerings = await response.json();
+
         // Temporary
-        setSearchResults(searchResults + [1]);
+        for (let offering of offerings.offerings) {
+            offering.TransactionType = transactionType;
+        }
+
+        setSearchResults(offerings.offerings);
     };
+
+    /*
+    const onToggleClick = () => {
+        if(searchType === searchTypes.QUOTE_AMOUNT){
+            setSearchType(searchTypes.PAIR);
+        }else{
+            setSearchType(searchTypes.QUOTE_AMOUNT);
+        }
+        setSearchResults(null);
+    };*/
 
     useEffect(() => {
         if (shouldMoveSearchBoxToTop) {
@@ -114,7 +147,53 @@ function ViewExchangesPage(props) {
                     searchType={searchType}
                     onSearchButtonClick={onSearchBoxSearchButtonClick}
                 />
-                <ExchangeResult exchangeName='FTX' buyOrSell='Buy' amount='4' baseCurrrency="BTC" quoteCurrency="USD" favorited={true}/>
+                {
+                    searchType === searchTypes.PAIR &&
+                        searchResults.length > 0 &&
+                        searchResults.map((result) => {
+                            return (
+                                <ExchangeResult
+                                    exchangeName={result.Exchange}
+                                    buyOrSell={result.TransactionType}
+                                    amount={result.Amount}
+                                    price={result.Price}
+                                    baseCurrency={result.CryptoCurrency}
+                                    quoteCurrency={result.Currency}
+                                    searchType={searchType}
+                                />);
+                        })
+                }
+                {
+                    searchType === searchTypes.QUOTE_AMOUNT &&
+                        searchResults.length > 0 &&
+                        baseCurrencies.map((base) => {
+                            return(
+                                <Collapsible trigger={base}>
+                                    <div style={{width:'100%'}} class="content">
+                                        {   
+                                            searchResults.map((result) => {
+                                                
+                                                if(result.CryptoCurrency === base){
+                                                    return((
+                                                        <ExchangeResult
+                                                            exchangeName={result.Exchange}
+                                                            transactionType={result.TransactionType}
+                                                            amount={result.Amount}
+                                                            price={result.Price}
+                                                            baseCurrency={result.CryptoCurrency}
+                                                            quoteCurrency={result.Currency}
+                                                            searchType={searchType}
+                                                        />
+                                                    ));
+                                                }
+                                            })
+                                        }
+                                    </div>
+                                </Collapsible>
+                            );
+                        })
+                        
+                    }
             </Col>
         </Row>
     );

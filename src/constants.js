@@ -172,13 +172,13 @@ export const baseCurrencies = [
 ];
     
 export const searchTypes = {
-    QUOTE_AMOUNT: "quote",
+    QUOTE_AMOUNT: "budget",
     PAIR: "pair"
 };
 
 export const transactionTypes = {
-    BUY: "buy",
-    SELL: "sell"
+    BUY: "bids",
+    SELL: "asks"
 };
 
 export const teamMembers = {
@@ -251,7 +251,7 @@ export const teamMembers = {
 };
 
 export const Exchanges = {
-    Binance_US: {
+    Binance: {
         exchangeName: "Binance US",
         link: "https://www.binance.us/en/home",
         logoImage: Binance_US
@@ -286,7 +286,7 @@ export const Exchanges = {
         link: "https://www.deribit.com/",
         logoImage: Deribit
     },
-    Coinbase_Pro: {
+    Coinbase: {
         exchangeName: "Coinbase Pro",
         link: "https://pro.coinbase.com/",
         logoImage: Coinbase_Pro
@@ -331,7 +331,7 @@ export const Exchanges = {
         link: "https://www.okcoin.com/us/",
         logoImage: OKCoin
     },
-    Bit_Z: {
+    BitZ: {
         exchangeName: "Bit Z",
         link: "https://www.bitz.ai/",
         logoImage: Bit_Z
@@ -354,6 +354,11 @@ export const Exchanges = {
     CrossTower: {
         exchangeName: "CrossTower",
         link: "https://crosstower.com/",
+        logoImage: CrossTower
+    },
+    Huobi: {
+        exchangeName: "Huobi",
+        link: "#", // TODO
         logoImage: CrossTower
     }
 };
