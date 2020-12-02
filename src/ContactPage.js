@@ -7,21 +7,29 @@ function ContactPage(props) {
         <body>
         <div class="row">
             <div class="column1">
-                <h1>Contact Us</h1>
+                <h1 style={{fontWeight:'550'}}>Contact Us</h1>
                 <div className="qccBox">
-                    <p>Have comments, questions, or concerns? Let us know!</p>
+                    <p style={{fontSize:'20px',fontWeight:'550'}}>Have comments, questions, or concerns? Let us know!</p>
                     <p>We will get back to you as soon as possible.</p>
                 </div>
 
                 <div class="row" style={{marginTop:'15px', marginLeft:'5px'}}>
                     <form className="contactForm">
                         <div class="column">
-                            First Name<br/>
-                            <input type="text" id="fname" name="fname" style={{width: '90%', marginTop:'10px'}}/>
+                            <label>First Name</label><br/>
+                            <input type="text" id="fname" name="fname" className="contactName"/>
                         </div>
                         <div class="column">
-                            Last Name<br/>
-                            <input type="text" id="lname" name="lname" style={{width: '90%', marginTop:'10px'}}/>
+                            <label>Last Name</label><br/>
+                            <input type="text" id="lname" name="lname" className="contactName"/>
+                        </div>
+                        <div>
+                            <label style={{marginTop:'10px'}}>Email</label><br/>
+                            <input type="text" id="email" name="email" className="contactEmail"/>
+                        </div>
+                        <div >
+                            <label style={{marginTop:'10px'}}>Message</label><br/>
+                            <textarea name="message" className="contactMessage"/>
                         </div>
                     </form>
                 </div>
