@@ -31,6 +31,7 @@ function ContactPage(props) {
                             <label style={{marginTop:'10px'}}>Message</label><br/>
                             <textarea name="message" className="contactMessage"/>
                         </div>
+                        <input type="submit" value="Send Message" className="contactSubmit"/>
                     </form>
                 </div>
             </div>
