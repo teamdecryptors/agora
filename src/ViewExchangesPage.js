@@ -75,8 +75,6 @@ function ViewExchangesPage(props) {
 
         baseUrl += "/" + amount;
 
-        alert(baseUrl);
-
         let response = await fetch(baseUrl);
         let offerings = await response.json();
 
