@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import ToggleButtonGroup from 'react-bootstrap/ToggleButtonGroup';
@@ -52,9 +52,10 @@ function ViewExchangesPage(props) {
     const [transactionType, setTransactionType] =
         useState(transactionTypes.BUY);
     const [searchResults, setSearchResults] = useState([]);
-    // const searchResultBases = [];
 
-    const shouldMoveSearchBoxToTop = searchResults.length > 0;
+    const shouldMoveSearchBoxToTop = useMemo(() => {
+        return searchResults.length > 0;
+    }, [searchResults.length]);
 
     const onSearchBoxSearchButtonClick = async () => {
         let baseUrl = "https://agora.bid/api/offerings";
@@ -81,16 +82,6 @@ function ViewExchangesPage(props) {
 
         setSearchResults(offerings.offerings);
     };
-
-    /*
-    const onToggleClick = () => {
-        if(searchType === searchTypes.QUOTE_AMOUNT){
-            setSearchType(searchTypes.PAIR);
-        }else{
-            setSearchType(searchTypes.QUOTE_AMOUNT);
-        }
-        setSearchResults(null);
-    };*/
 
     useEffect(() => {
         if (shouldMoveSearchBoxToTop) {
@@ -150,10 +141,11 @@ function ViewExchangesPage(props) {
                 {
                     searchType === searchTypes.PAIR &&
                         searchResults.length > 0 &&
-                        searchResults.map((result) => {
+                        searchResults.map((result, index) => {
                             return (
                                 <ExchangeResult
-                                    exchangeName={result.Exchange}
+                                    key={`${result.Exchange}-${index}`}
+                                    exchange={result.Exchange}
                                     transactionType={result.TransactionType}
                                     amount={result.Amount}
                                     price={result.Price}
@@ -171,21 +163,19 @@ function ViewExchangesPage(props) {
                                 <Collapsible trigger={base}>
                                     <div style={{width:'100%'}} class="content">
                                         {   
-                                            searchResults.map((result) => {
-                                                
-                                                if(result.CryptoCurrency === base){
-                                                    return((
-                                                        <ExchangeResult
-                                                            exchangeName={result.Exchange}
-                                                            transactionType={result.TransactionType}
-                                                            amount={result.Amount}
-                                                            price={result.Price}
-                                                            baseCurrency={result.CryptoCurrency}
-                                                            quoteCurrency={result.Currency}
-                                                            searchType={searchType}
-                                                        />
-                                                    ));
-                                                }
+                                            searchResults.map((result, index) => {
+                                                return (
+                                                    <ExchangeResult
+                                                        key={`${result.Exchange}-${index}`}
+                                                        exchange={result.Exchange}
+                                                        transactionType={result.TransactionType}
+                                                        amount={result.Amount}
+                                                        price={result.Price}
+                                                        baseCurrency={result.CryptoCurrency}
+                                                        quoteCurrency={result.Currency}
+                                                        searchType={searchType}
+                                                    />
+                                                );
                                             })
                                         }
                                     </div>
