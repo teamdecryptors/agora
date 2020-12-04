@@ -1,30 +1,3 @@
-import ViewExchangesPage from './ViewExchangesPage';
-import FavoritesPage from './FavoritesPage';
-import EducationPage from './EducationPage';
-import AboutPage from './AboutPage';
-import ContactPage from './ContactPage';
-import Coinbase_Pro from './exchange_logos/Coinbase_Pro.png';
-import Binance_US from './exchange_logos/Binance_US.png';
-import Bit_Z from './exchange_logos/Bit_Z.png';
-import BitBay from './exchange_logos/BitBay.png';
-import Bitfinex from './exchange_logos/Bitfinex.png';
-import bitFlyer from './exchange_logos/bitFlyer.png';
-import Bithumb from './exchange_logos/Bithumb.png';
-import BitMEX from './exchange_logos/BitMEX.jpg';
-import Bitstamp from './exchange_logos/Bitstamp.png';
-import Bittrex from './exchange_logos/Bittrex.png';
-import CEX from './exchange_logos/CEX.png';
-import CrossTower from './exchange_logos/CrossTower.png';
-import Deribit from './exchange_logos/Deribit.png';
-import FTX from './exchange_logos/FTX.png';
-import Gate from './exchange_logos/Gate.png';
-import Gemini from './exchange_logos/Gemini.png';
-import HitBTC from './exchange_logos/HitBTC.png';
-import Kraken from './exchange_logos/Kraken.png';
-import Liquid from './exchange_logos/Liquid.png';
-import OKCoin from './exchange_logos/OKCoin.png';
-import Poloniex from './exchange_logos/Poloniex.png';
-
 import usdIcon from '@iconify-icons/cryptocurrency/usd';
 import btcIcon from '@iconify-icons/cryptocurrency/btc';
 import eurIcon from '@iconify-icons/cryptocurrency/eur';
@@ -44,6 +17,32 @@ import adaIcon from '@iconify-icons/cryptocurrency/ada';
 import dashIcon from '@iconify-icons/cryptocurrency/dash';
 import xtzIcon from '@iconify-icons/cryptocurrency/xtz';
 import usdcIcon from '@iconify-icons/cryptocurrency/usdc';
+
+import ViewExchangesPage from './ViewExchangesPage';
+import FavoritesPage from './FavoritesPage';
+import EducationPage from './EducationPage';
+import AboutPage from './AboutPage';
+import ContactPage from './ContactPage';
+
+import binanceLogo from './exchange_logos/Binance_US.png';
+import bitbayLogo from './exchange_logos/BitBay.png';
+import bitfinexLogo from './exchange_logos/Bitfinex.png';
+import bitflyerLogo from './exchange_logos/bitFlyer.png';
+import bithumbLogo from './exchange_logos/Bithumb.png';
+import bitstampLogo from './exchange_logos/Bitstamp.png';
+import bittrexLogo from './exchange_logos/Bittrex.png';
+import bitzLogo from './exchange_logos/Bit_Z.png';
+import cexLogo from './exchange_logos/CEX.png';
+import coinbaseLogo from './exchange_logos/Coinbase_Pro.png';
+import crosstowerLogo from './exchange_logos/CrossTower.png';
+import ftxLogo from './exchange_logos/FTX.png';
+import gateLogo from './exchange_logos/Gate.png';
+import geminiLogo from './exchange_logos/Gemini.png';
+import hitbtcLogo from './exchange_logos/HitBTC.png';
+import krakenLogo from './exchange_logos/Kraken.png';
+import liquidLogo from './exchange_logos/Liquid.png';
+import okcoinLogo from './exchange_logos/OKCoin.png';
+import poloniexLogo from './exchange_logos/Poloniex.png';
 
 import vicente_headshot from './headshots/vicente_headshot.png';
 import yishai_headshot from './headshots/yishai_headshot.png';
@@ -250,116 +249,101 @@ export const teamMembers = {
     } 
 };
 
-export const Exchanges = {
-    Binance: {
+export const exchanges = {
+    BINANCE: {
         exchangeName: "Binance US",
         link: "https://www.binance.us/en/home",
-        logoImage: Binance_US
+        logoImage: binanceLogo
+    },
+    BITBAY: {
+        exchangeName: "BitBay",
+        link: "https://bitbay.net/en",
+        logoImage: bitbayLogo
+    },
+    BITFINEX: {
+        exchangeName: "Bitfinex",
+        link: "https://ftx.com/en",
+        logoImage: bitfinexLogo
+    },
+    BITFLYER: {
+        exchangeName: "bitFlyer",
+        link: "https://bitflyer.com/en-us/",
+        logoImage: bitflyerLogo
+    },
+    BITHUMB: {
+        exchangeName: "Bithumb",
+        link: "https://en.bithumb.com/",
+        logoImage: bithumbLogo
+    },
+    BITSTAMP: {
+        exchangeName: "Bitstamp",
+        link: "https://www.bitstamp.net/",
+        logoImage: bitstampLogo
+    },
+    BITTREX: {
+        exchangeName: "Bittrex",
+        link: "https://bittrex.com/",
+        logoImage: bittrexLogo
+    },
+    BITZ: {
+        exchangeName: "Bit Z",
+        link: "https://www.bitz.ai/",
+        logoImage: bitzLogo
+    },
+    CEX_IO: {
+        exchangeName: "CEX",
+        link: "https://cex.io/",
+        logoImage: cexLogo
+    },
+    COINBASE: {
+        exchangeName: "Coinbase Pro",
+        link: "https://pro.coinbase.com/",
+        logoImage: coinbaseLogo
+    },
+    CROSSTOWER: {
+        exchangeName: "CrossTower",
+        link: "https://crosstower.com/",
+        logoImage: crosstowerLogo
     },
     FTX: {
         exchangeName: "FTX",
         link: "https://ftx.com/en",
-        logoImage: FTX
+        logoImage: ftxLogo
     },
-    Bitfinex: {
-        exchangeName: "Bitfinex",
-        link: "https://ftx.com/en",
-        logoImage: Bitfinex
-    },
-    BitMEX: {
-        exchangeName: "BitMEX",
-        link: "https://www.bitmex.com/",
-        logoImage: BitMEX
-    },
-    Kraken: {
-        exchangeName: "Kraken",
-        link: "https://www.kraken.com/en-us/",
-        logoImage: Kraken
-    },
-    HitBTC: {
-        exchangeName: "HitBTC",
-        link: "https://hitbtc.com/",
-        logoImage: HitBTC
-    },
-    Deribit: {
-        exchangeName: "Deribit",
-        link: "https://www.deribit.com/",
-        logoImage: Deribit
-    },
-    Coinbase: {
-        exchangeName: "Coinbase Pro",
-        link: "https://pro.coinbase.com/",
-        logoImage: Coinbase_Pro
-    },
-    Bitstamp: {
-        exchangeName: "Bitstamp",
-        link: "https://www.bitstamp.net/",
-        logoImage: Bitstamp
-    },
-    Bittrex: {
-        exchangeName: "Bittrex",
-        link: "https://bittrex.com/",
-        logoImage: Bittrex
-    },
-    Liquid: {
-        exchangeName: "Liquid",
-        link: "https://www.liquid.com/",
-        logoImage: Liquid
-    },
-    CEX: {
-        exchangeName: "CEX",
-        link: "https://cex.io/",
-        logoImage: CEX
-    },
-    Poloniex: {
-        exchangeName: "Poloniex",
-        link: "https://poloniex.com/",
-        logoImage: Poloniex
-    },
-    Gate: {
+    GATE_IO: {
         exchangeName: "Gate",
         link: "https://www.gate.io/",
-        logoImage: Gate
+        logoImage: gateLogo
     },
-    Gemini: {
+    GEMINI: {
         exchangeName: "Gemini",
-        link: "https://gemini.com/?utm_source=Google%20AdWords&utm_campaign=USA_Search_Gemini&utm_medium=paid%20advertising&utm_content=56412057490&utm_term=gemini%20crypto&gclid=CjwKCAiA5IL-BRAzEiwA0lcWYrV17vl64h4UYxtKrcoqKWopdcTQhmOmya1uyZ4Gw9VtFboN7pTwkBoCqkEQAvD_BwE",
-        logoImage: Gemini
+        link: "https://gemini.com/",
+        logoImage: geminiLogo
     },
-    OKCoin: {
+    HITBTC: {
+        exchangeName: "HitBTC",
+        link: "https://hitbtc.com/",
+        logoImage: hitbtcLogo
+    },
+    KRAKEN: {
+        exchangeName: "Kraken",
+        link: "https://www.kraken.com/en-us/",
+        logoImage: krakenLogo
+    },
+    LIQUID: {
+        exchangeName: "Liquid",
+        link: "https://www.liquid.com/",
+        logoImage: liquidLogo
+    },
+    OKCOIN: {
         exchangeName: "OKCoin",
         link: "https://www.okcoin.com/us/",
-        logoImage: OKCoin
+        logoImage: okcoinLogo
     },
-    BitZ: {
-        exchangeName: "Bit Z",
-        link: "https://www.bitz.ai/",
-        logoImage: Bit_Z
-    },
-    bitFlyer: {
-        exchangeName: "bitFlyer",
-        link: "https://bitflyer.com/en-us/",
-        logoImage: bitFlyer
-    },
-    Bithumb: {
-        exchangeName: "Bithumb",
-        link: "https://en.bithumb.com/",
-        logoImage: Bithumb
-    },
-    BitBay: {
-        exchangeName: "BitBay",
-        link: "https://bitbay.net/en",
-        logoImage: BitBay
-    },
-    CrossTower: {
-        exchangeName: "CrossTower",
-        link: "https://crosstower.com/",
-        logoImage: CrossTower
-    },
-    Huobi: {
-        exchangeName: "Huobi",
-        link: "#", // TODO
-        logoImage: CrossTower
+    POLONIEX: {
+        exchangeName: "Poloniex",
+        link: "https://poloniex.com/",
+        logoImage: poloniexLogo
     }
 };
 

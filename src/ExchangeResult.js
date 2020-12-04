@@ -1,53 +1,46 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState } from 'react';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import { ArrowLeft, StarFill, ArrowRight } from 'react-bootstrap-icons';
-import { Exchanges, searchTypes, transactionTypes } from './constants'
+import { exchanges, searchTypes, transactionTypes } from './constants'
 import './ExchangeResult.css';
 
-function ExchangeResult(props){
-    const exchange = props.exchangeName;
-    const formalExchangeName = Exchanges[exchange].exchangeName;
-    const url = Exchanges[exchange].link;
-    var arrow = '';
-    if (props.transactionType === transactionTypes.BUY){
-        arrow = <span className="mb-0 arrow align-self-center">
-        &nbsp; {<ArrowLeft size={25} />} &nbsp;
-        </span>
-    }
-    else{
-        arrow = <span className="mb-0 arrow align-self-center">
-        &nbsp; {<ArrowRight size={25} />} &nbsp;
-        </span>
-    }
+function ExchangeResult(props) {
+    const { exchangeName, link, logoImage } = 
+        exchanges[props.exchange];
+
     const [starColor, setColor] = useState('lightgray');
-    const btnColor = useMemo(() => {
-        return starColor === 'lightgray' ? 'gold' : 'lightgray';
-    }, [starColor]);
+
     const isQuoteAmountSearch = 
         props.searchType === searchTypes.QUOTE_AMOUNT;
+    const isBuyTransaction = 
+        props.transactionType === transactionTypes.BUY;
+
+    const transaction = isBuyTransaction ? "BUY" : "SELL";
     const resultClassesForSearchType = isQuoteAmountSearch ? 
         "result quoteAmountSearchResult" :
         "result pairSearchResult mb-2"
 
     const onFavoriteButtonClick = (e) => {
         e.preventDefault();
-        setColor(btnColor);
+        setColor(starColor === 'lightgray' ? 
+            'gold' : 
+            'lightgray');
     };
 
     return(
         <Row className={resultClassesForSearchType}>
             <Col>
                 <a
-                    href={ url }
+                    href={link}
                     className="resultLink mb-0"
                     target="_blank" rel="noopener noreferrer"
                 >
                     <Row className="align-items-center py-2">
                         <Col className='px-2' xs="auto">
                             <img
-                                src={ Exchanges[exchange].logoImage } 
-                                alt={ exchange }
+                                src={logoImage} 
+                                alt={exchangeName}
                                 width={60}
                                 height={60}
                             />
@@ -55,12 +48,12 @@ function ExchangeResult(props){
                         <Col xs={2} className="px-1">
                             <Row>
                                 <Col>
-                                    {formalExchangeName}
+                                    {exchangeName}
                                 </Col>
                             </Row>
                             <Row>
                                 <Col>
-                                    {props.transactionType}
+                                    {transaction}
                                 </Col>
                             </Row>
                         </Col>
@@ -72,7 +65,15 @@ function ExchangeResult(props){
                             <span className="mb-0 currency">
                                 {props.baseCurrency}
                             </span>
-                            {arrow}
+                            <span className="mb-0 arrow align-self-center">
+                                &nbsp;
+                                {
+                                    isBuyTransaction ?
+                                        <ArrowLeft size={25} /> :
+                                        <ArrowRight size={25} />
+                                }
+                                &nbsp;
+                            </span>
                             <span className="mb-0 amount">
                                 {props.price}
                             </span>
