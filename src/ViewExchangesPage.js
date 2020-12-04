@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import Spinner from 'react-bootstrap/Spinner';
 import ToggleButtonGroup from 'react-bootstrap/ToggleButtonGroup';
 import ToggleButton from 'react-bootstrap/ToggleButton';
 import SearchBox from './SearchBox';
@@ -52,6 +53,7 @@ function ViewExchangesPage(props) {
     const [transactionType, setTransactionType] =
         useState(transactionTypes.BUY);
     const [searchResults, setSearchResults] = useState([]);
+    const [isRetrievingResults, setIsRetrievingResults] = useState(false);
 
     const shouldMoveSearchBoxToTop = useMemo(() => {
         return searchResults.length > 0;
@@ -60,17 +62,20 @@ function ViewExchangesPage(props) {
     const onSearchBoxSearchButtonClick = async () => {
         let baseUrl = "https://agora.bid/api/offerings";
 
-        baseUrl = baseUrl + "/" + transactionType;
-        baseUrl = baseUrl + "/" + searchType;
+        baseUrl += "/" + transactionType + "/" + searchType;
 
-        if(searchType === searchTypes.QUOTE_AMOUNT) {
-            baseUrl = baseUrl + "/" + quoteCurrency;
+        setIsRetrievingResults(true);
+
+        if (searchType === searchTypes.QUOTE_AMOUNT) {
+            baseUrl += "/" + quoteCurrency;
         }
-        else{
-            baseUrl = baseUrl + "/" + baseCurrency + "/" + quoteCurrency;
+        else {
+            baseUrl += "/" + baseCurrency + "/" + quoteCurrency;
         }
 
-        baseUrl = baseUrl + "/" + amount;
+        baseUrl += "/" + amount;
+
+        alert(baseUrl);
 
         let response = await fetch(baseUrl);
         let offerings = await response.json();
@@ -81,16 +86,18 @@ function ViewExchangesPage(props) {
         }
 
         setSearchResults(offerings.offerings);
+
+        setIsRetrievingResults(false);
     };
 
     useEffect(() => {
         if (shouldMoveSearchBoxToTop) {
             moveSearchBoxToTop();
         }
-        else {
+        else if (!isRetrievingResults) {
             moveSearchBoxToMiddle();
         }
-    }, [shouldMoveSearchBoxToTop]);
+    }, [shouldMoveSearchBoxToTop, isRetrievingResults]);
 
     return (
         <Row id="viewExchangesPageWrapper">
@@ -139,6 +146,14 @@ function ViewExchangesPage(props) {
                     onSearchButtonClick={onSearchBoxSearchButtonClick}
                 />
                 {
+                    isRetrievingResults &&
+                    <Row className="mt-2 mb-4">
+                        <Col className="text-center">
+                            <Spinner animation="border" />
+                        </Col>
+                    </Row>
+                }
+                {
                     searchType === searchTypes.PAIR &&
                         searchResults.length > 0 &&
                         searchResults.map((result, index) => {
@@ -163,7 +178,7 @@ function ViewExchangesPage(props) {
                                 <Collapsible trigger={base}>
                                     <div style={{width:'100%'}} class="content">
                                         {   
-                                            searchResults.map((result, index) => {
+                                            searchResults.filter((result) => result.CryptoCurrency === base).map((result, index) => {
                                                 return (
                                                     <ExchangeResult
                                                         key={`${result.Exchange}-${index}`}

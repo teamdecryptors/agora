@@ -37,7 +37,7 @@ function ExchangeResult(props) {
                     target="_blank" rel="noopener noreferrer"
                 >
                     <Row className="align-items-center py-2">
-                        <Col className='px-2' xs="auto">
+                        <Col className='pl-3 pr-2' xs="auto">
                             <img
                                 src={logoImage} 
                                 alt={exchangeName}
@@ -57,7 +57,7 @@ function ExchangeResult(props) {
                                 </Col>
                             </Row>
                         </Col>
-                        <Col className="mb-0 d-flex justify-content-center align-items-baseline">
+                        <Col className="mb-0 d-flex justify-content-end align-items-baseline">
                             <span className="mb-0 amount">
                                 {props.amount}
                             </span>
@@ -65,14 +65,12 @@ function ExchangeResult(props) {
                             <span className="mb-0 currency">
                                 {props.baseCurrency}
                             </span>
-                            <span className="mb-0 arrow align-self-center">
-                                &nbsp;
+                            <span className="mb-0 arrow align-self-center px-3">
                                 {
                                     isBuyTransaction ?
                                         <ArrowLeft size={25} /> :
                                         <ArrowRight size={25} />
                                 }
-                                &nbsp;
                             </span>
                             <span className="mb-0 amount">
                                 {props.price}
@@ -82,6 +80,7 @@ function ExchangeResult(props) {
                                 {props.quoteCurrency} 
                             </span>
                         </Col>
+                        <Col xs={1}></Col>
                         <Col xs={1} className="text-center">
                             <StarFill
                                 color={starColor}
