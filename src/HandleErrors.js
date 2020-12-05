@@ -6,7 +6,7 @@ function HandleErrors(){
     if (show){
             return(
                 <Alert variant="danger" onClose={() => setShow(false)}>
-                <Alert.Heading>Inputted Amount is not Valid</Alert.Heading>
+                <Alert.Heading>Input must be greater than 0 or numerical</Alert.Heading>
                 </Alert>
             )
     }

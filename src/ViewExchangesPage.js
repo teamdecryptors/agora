@@ -13,6 +13,7 @@ import {
 } from './constants';
 import './ViewExchangesPage.css';
 import ExchangeResult from "./ExchangeResult";
+import HandleErrors from "./HandleErrors";
 import Collapsible from 'react-collapsible';
 
 function moveSearchBoxToMiddle() {
@@ -40,6 +41,12 @@ function moveSearchBoxToTop() {
         
     viewExchangesPageWrapper.classList.remove("h-100", "align-items-center");
     viewExchangesPageWrapper.classList.add("pt-5");
+}
+
+function checkAmount(amount){
+    if (amount < 0 || isNaN(amount) || amount === '-0'){
+        return <HandleErrors/>
+    }
 }
 
 function ViewExchangesPage(props) {
@@ -143,6 +150,9 @@ function ViewExchangesPage(props) {
                     searchType={searchType}
                     onSearchButtonClick={onSearchBoxSearchButtonClick}
                 />
+                {
+                    checkAmount(amount)
+                }
                 {
                     isRetrievingResults &&
                     <Row className="mt-2 mb-4">
