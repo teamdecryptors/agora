@@ -74,24 +74,28 @@ app.get('/api/offerings/asks/budget/:currency/:amount', (req,res) => {
                     const offerings = result[exchange][crypto];                               
                     let i = 0;
                     let amount = 0;
+                    let price = 0;
 
                     while(budget > 0) {
+                        if(offerings[i] == null ) { break; }
                         const offeringCost = parseFloat(offerings[i].price);
                         const offeringSize = parseFloat(offerings[i++].size);
 
                         //console.log(offeringCost + " X " + offeringSize);
                         
                         //if we need to take a fraction of the offering
-                        console.log("Cost for " + exchange + " at " + crypto + ":" + (offeringCost*offeringSize));
+                        //console.log("Cost for " + exchange + " at " + crypto + ":" + (offeringCost*offeringSize));
                         if(budget < (offeringCost*offeringSize)) {
                             let ratio = budget / offeringCost;
                             //console.log("ratio: " + ratio)
                             budget -= (offeringCost * offeringSize) * ratio;
                             amount += ratio;
+                            price += (offeringCost * offeringSize) * ratio;
 
                         } else {
                             budget -= (offeringCost * offeringSize);
                             amount += offeringSize;
+                            price += (offeringCost * offeringSize);
                         }
                     }
 
@@ -101,7 +105,8 @@ app.get('/api/offerings/asks/budget/:currency/:amount', (req,res) => {
                             "CryptoCurrency" : crypto,
                             "Amount": amount,
                             "Currency": req.params.currency,
-                            "Price" : req.params.amount
+                            "Price" : price,
+                            "Action": "Ask"
                         });
                 }                
                
@@ -135,9 +140,11 @@ app.get('/api/offerings/bids/budget/:currency/:amount', (req, res) => {
                   const offerings = result[exchange][crypto];                               
                   let i = 0;
                   let amount = 0;
+                  let price = 0;
 
                   while(budget > 0) {
-                      const offeringCost = parseFloat(offerings[i].price);
+                    if(offerings[i] == null ) { break; }
+                    const offeringCost = parseFloat(offerings[i].price);
                       const offeringSize = parseFloat(offerings[i++].size);
 
                       //console.log(offeringCost + " X " + offeringSize);
@@ -145,14 +152,15 @@ app.get('/api/offerings/bids/budget/:currency/:amount', (req, res) => {
                       //if we need to take a fraction of the offering
                       //console.log("Cost for " + exchange + " at " + crypto + ":" + (offeringCost*offeringSize));
                       if(budget < (offeringCost*offeringSize)) {
-                          let ratio = budget / offeringCost;
-                          //console.log("ratio: " + ratio)
-                          budget -= (offeringCost * offeringSize) * ratio;
+                          let ratio = budget / offeringCost;                          
+                          price += (offeringCost * offeringSize) * ratio;
+                          budget = 0;
                           amount += ratio;
 
                       } else {
                           budget -= (offeringCost * offeringSize);
                           amount += offeringSize;
+                          price += (offeringCost * offeringSize);
                       }
                   }
 
@@ -162,7 +170,8 @@ app.get('/api/offerings/bids/budget/:currency/:amount', (req, res) => {
                           "CryptoCurrency" : crypto,
                           "Amount": amount,
                           "Currency": req.params.currency,
-                          "Price" : req.params.amount
+                          "Price" : price,
+                          "Action": "Bid"
                       });
               }                
              
@@ -193,9 +202,11 @@ app.get("/api/offerings/asks/pair/:cryptoCurrency/:currency/:amount", (req, res)
                 const offerings = result[exchange][req.params.cryptoCurrency];                               
                 let i = 0;
                 let cost = 0;
+                let purchasableAmount = 0;
                 //console.log(offerings[0])
                 while(amount > 0) {
-                    let offering = offerings[i++];                    
+                    let offering = offerings[i++]; 
+                    if(offering == null ) { break; }                   
                     const offeringCost = parseFloat(offering.price);
                     const offeringSize = parseFloat(offering.size);
   
@@ -204,12 +215,13 @@ app.get("/api/offerings/asks/pair/:cryptoCurrency/:currency/:amount", (req, res)
                     //if we need to take a fraction of the offering
                     //console.log("Cost for " + exchange + " at " + crypto + ":" + (offeringCost*offeringSize));
                     if(amount < offeringSize) {
-                        let ratio = amount / offeringSize;
                         cost += offeringCost * amount;
+                        purchasableAmount += amount;
                         amount = 0;                         
                     } else {
                         amount -= offeringSize;
                         cost += offeringCost*offeringSize;
+                        purchasableAmount += offeringSize;
                     }
                 } 
   
@@ -217,9 +229,10 @@ app.get("/api/offerings/asks/pair/:cryptoCurrency/:currency/:amount", (req, res)
                     { 
                         "Exchange": exchange, 
                         "CryptoCurrency" : req.params.cryptoCurrency,
-                        "Amount": req.params.amount,
+                        "Amount": purchasableAmount,
                         "Currency": req.params.currency,
-                        "Price" : cost
+                        "Price" : cost,
+                        "Action": "Ask"
                     });         
                
             }
@@ -246,9 +259,11 @@ app.get('/api/offerings/bids/pair/:cryptoCurrency/:currency/:amount', (req, res)
                 const offerings = result[exchange][req.params.cryptoCurrency];                               
                 let i = 0;
                 let cost = 0;
+                let purchasableAmount = 0;
                 //console.log(offerings[0])
                 while(amount > 0) {
-                    let offering = offerings[i++];                    
+                    let offering = offerings[i++];  
+                    if(offering == null ) { break; }                  
                     const offeringCost = parseFloat(offering.price);
                     const offeringSize = parseFloat(offering.size);
   
@@ -257,12 +272,13 @@ app.get('/api/offerings/bids/pair/:cryptoCurrency/:currency/:amount', (req, res)
                     //if we need to take a fraction of the offering
                     //console.log("Cost for " + exchange + " at " + crypto + ":" + (offeringCost*offeringSize));
                     if(amount < offeringSize) {
-                        let ratio = amount / offeringSize;
                         cost += offeringCost * amount;
+                        purchasableAmount += amount;
                         amount = 0;                         
                     } else {
                         amount -= offeringSize;
                         cost += offeringCost*offeringSize;
+                        purchasableAmount += offeringSize;
                     }
                 } 
   
@@ -270,9 +286,10 @@ app.get('/api/offerings/bids/pair/:cryptoCurrency/:currency/:amount', (req, res)
                     { 
                         "Exchange": exchange, 
                         "CryptoCurrency" : req.params.cryptoCurrency,
-                        "Amount": req.params.amount,
+                        "Amount": purchasableAmount,
                         "Currency": req.params.currency,
-                        "Price" : cost
+                        "Price" : cost,
+                        "Action": "Bid"
                     });         
                
             }
