@@ -278,7 +278,7 @@ export const exchanges = {
     },
     BITFINEX: {
         exchangeName: "Bitfinex",
-        link: "https://ftx.com/en",
+        link: "https://www.bitfinex.com/",
         logoImage: bitfinexLogo
     },
     BITFLYER: {
@@ -323,7 +323,7 @@ export const exchanges = {
     },
     FTX: {
         exchangeName: "FTX",
-        link: "https://ftx.com/en",
+        link: "https://ftx.us/en",
         logoImage: ftxLogo
     },
     GATE_IO: {
