@@ -9,6 +9,12 @@ const db = admin.initializeApp().database();
 
 const app = express();
 
+const cryptoSigFigs = 5;
+const round = (number, decimalPlaces) => {
+    const factorOfTen = Math.pow(10, decimalPlaces);
+    return Math.round(number * factorOfTen) / factorOfTen;
+}
+
 // These are demo endpints not for final release
 app.get('/api/offerings' , (req, res) => {
     res.set('Access-Control-Allow-Origin', '*');
@@ -88,9 +94,10 @@ app.get('/api/offerings/asks/budget/:currency/:amount', (req,res) => {
                         if(budget < (offeringCost*offeringSize)) {
                             let ratio = budget / offeringCost;
                             //console.log("ratio: " + ratio)
-                            budget -= (offeringCost * offeringSize) * ratio;
+                            
                             amount += ratio;
-                            price += (offeringCost * offeringSize) * ratio;
+                            price +=  budget;
+                            budget = 0;
 
                         } else {
                             budget -= (offeringCost * offeringSize);
@@ -103,10 +110,10 @@ app.get('/api/offerings/asks/budget/:currency/:amount', (req,res) => {
                         { 
                             "Exchange": exchange, 
                             "CryptoCurrency" : crypto,
-                            "Amount": amount,
+                            "Amount": round(amount, cryptoSigFigs),
                             "Currency": req.params.currency,
-                            "Price" : price,
-                            "Action": "Ask"
+                            "Price" : round(price, 2),
+                            "Action": "Asks"
                         });
                 }                
                
@@ -153,7 +160,7 @@ app.get('/api/offerings/bids/budget/:currency/:amount', (req, res) => {
                       //console.log("Cost for " + exchange + " at " + crypto + ":" + (offeringCost*offeringSize));
                       if(budget < (offeringCost*offeringSize)) {
                           let ratio = budget / offeringCost;                          
-                          price += (offeringCost * offeringSize) * ratio;
+                          price += budget;
                           budget = 0;
                           amount += ratio;
 
@@ -168,9 +175,9 @@ app.get('/api/offerings/bids/budget/:currency/:amount', (req, res) => {
                       { 
                           "Exchange": exchange, 
                           "CryptoCurrency" : crypto,
-                          "Amount": amount,
+                          "Amount": round(amount, cryptoSigFigs),
                           "Currency": req.params.currency,
-                          "Price" : price,
+                          "Price" : round(price, 2),
                           "Action": "Bid"
                       });
               }                
@@ -229,10 +236,10 @@ app.get("/api/offerings/asks/pair/:cryptoCurrency/:currency/:amount", (req, res)
                     { 
                         "Exchange": exchange, 
                         "CryptoCurrency" : req.params.cryptoCurrency,
-                        "Amount": purchasableAmount,
+                        "Amount": round(purchasableAmount, cryptoSigFigs),
                         "Currency": req.params.currency,
-                        "Price" : cost,
-                        "Action": "Ask"
+                        "Price" : round(cost, 2),
+                        "Action": "Asks"
                     });         
                
             }
@@ -286,9 +293,9 @@ app.get('/api/offerings/bids/pair/:cryptoCurrency/:currency/:amount', (req, res)
                     { 
                         "Exchange": exchange, 
                         "CryptoCurrency" : req.params.cryptoCurrency,
-                        "Amount": purchasableAmount,
+                        "Amount": round(purchasableAmount, cryptoSigFigs),
                         "Currency": req.params.currency,
-                        "Price" : cost,
+                        "Price" : round(cost, 2),
                         "Action": "Bid"
                     });         
                
