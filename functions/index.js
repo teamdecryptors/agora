@@ -206,7 +206,8 @@ app.get("/api/offerings/asks/pair/:cryptoCurrency/:currency/:amount", (req, res)
                 let amount = req.params.amount;  
                 //console.log(budget); 
                 
-                const offerings = result[exchange][req.params.cryptoCurrency];                               
+                const offerings = result[exchange][req.params.cryptoCurrency];  
+                if(offerings == null) { break; }                             
                 let i = 0;
                 let cost = 0;
                 let purchasableAmount = 0;
@@ -263,7 +264,8 @@ app.get('/api/offerings/bids/pair/:cryptoCurrency/:currency/:amount', (req, res)
                 let amount = req.params.amount;  
                 //console.log(budget); 
                 
-                const offerings = result[exchange][req.params.cryptoCurrency];                               
+                const offerings = result[exchange][req.params.cryptoCurrency]; 
+                if(offerings == null) { break; }                               
                 let i = 0;
                 let cost = 0;
                 let purchasableAmount = 0;
