@@ -1,0 +1,13 @@
+.image {
+    position: relative;
+    text-align: center;
+    color: black;
+}
+
+.centered {
+    position: absolute;
+    top: 40%;
+    left: 5%;
+    width: 90%;
+    font-size: small;
+}
