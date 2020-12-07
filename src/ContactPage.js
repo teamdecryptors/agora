@@ -1,9 +1,24 @@
 import React from 'react';
 import './ContactPage.css';
 import contactImg from './contact.jpg';
+import {contactIds} from './constants';
+import emailjs from 'emailjs-com';
 
 function ContactPage(props) {
+
+    function sendEmail(e) {
+        e.preventDefault();
+    
+        emailjs.sendForm(contactIds.SERVICE_ID, contactIds.TEMPLATE_ID, e.target, contactIds.USER_ID)
+          .then((result) => {
+              console.log(result.text);
+          }, (error) => {
+              console.log(error.text);
+          });
+      }
+
     return (
+        
         <body>
         <div class="row">
             <div class="column1">
@@ -14,7 +29,7 @@ function ContactPage(props) {
                 </div>
 
                 <div class="row" style={{marginTop:'15px', marginLeft:'5px'}}>
-                    <form className="contactForm">
+                    <form className="contactForm" onSubmit={sendEmail}>
                         <div class="column">
                             <label>First Name</label><br/>
                             <input type="text" id="fname" name="fname" className="contactName"/>
@@ -25,7 +40,7 @@ function ContactPage(props) {
                         </div>
                         <div>
                             <label style={{marginTop:'10px'}}>Email</label><br/>
-                            <input type="text" id="email" name="email" className="contactEmail"/>
+                            <input type="email" id="email" name="email" className="contactEmail"/>
                         </div>
                         <div >
                             <label style={{marginTop:'10px'}}>Message</label><br/>
@@ -41,6 +56,7 @@ function ContactPage(props) {
             </div>
         </div> 
         </body>
+        
     );
 }
 

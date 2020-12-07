@@ -100,6 +100,12 @@ export const pages = {
     }
 };
 
+export const contactIds = {
+    SERVICE_ID: 'agora_contact',
+    TEMPLATE_ID: 'agora_message',
+    USER_ID: 'user_pnbIMaCNOgz1t2DnC8FY2'
+}
+
 export const currencies = {
     USD: {
         name: "US Dollar",
