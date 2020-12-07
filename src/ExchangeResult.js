@@ -29,7 +29,7 @@ function ExchangeResult(props) {
     };
 
     return(
-        <Row className={resultClassesForSearchType}>
+        <Row className={`align-items-center ${resultClassesForSearchType}`}>
             <Col>
                 <a
                     href={link}
@@ -48,49 +48,55 @@ function ExchangeResult(props) {
                         <Col xs={2} className="px-1">
                             <Row>
                                 <Col>
-                                    {exchangeName}
+                                    <span className="exchangeName">
+                                        {exchangeName}
+                                    </span>
                                 </Col>
                             </Row>
                             <Row>
-                                <Col>
+                                <Col className="text-secondary">
                                     {transaction}
                                 </Col>
                             </Row>
                         </Col>
-                        <Col className="mb-0 d-flex justify-content-end align-items-baseline">
-                            <span className="mb-0 amount">
-                                {props.amount}
-                            </span>
-                            &nbsp;
-                            <span className="mb-0 currency">
-                                {props.baseCurrency}
-                            </span>
-                            <span className="mb-0 arrow align-self-center px-3">
+                        <Col>
+                            <Row className="align-items-baseline text-center">
+                                <Col className="text-right">
+                                    <span className="amount mr-1">
+                                        {props.amount}
+                                    </span>
+                                    &nbsp;
+                                    <span className="currency">
+                                        {props.baseCurrency}
+                                    </span>
+                                </Col>
+                                <Col xs="auto" className="align-self-center">
                                 {
                                     isBuyTransaction ?
                                         <ArrowLeft size={25} /> :
                                         <ArrowRight size={25} />
                                 }
-                            </span>
-                            <span className="mb-0 amount">
-                                {props.price}
-                            </span>
-                            &nbsp;
-                            <span className="mb-0 currency">
-                                {props.quoteCurrency} 
-                            </span>
-                        </Col>
-                        <Col xs={1}></Col>
-                        <Col xs={1} className="text-center">
-                            <StarFill
-                                color={starColor}
-                                className="favoriteButton"
-                                onClick={onFavoriteButtonClick}
-                                size={25}
-                            />
+                                </Col>
+                                <Col className="text-left">
+                                    <span className="amount mr-1">
+                                        {props.price}
+                                    </span>
+                                    <span className="currency">
+                                        {props.quoteCurrency}
+                                    </span>
+                                </Col>
+                            </Row>
                         </Col>
                     </Row>
                 </a>
+            </Col>
+            <Col xs={1} className="text-center mx-2">
+                <StarFill
+                    color={starColor}
+                    className="favoriteButton"
+                    onClick={onFavoriteButtonClick}
+                    size={25}
+                />
             </Col>
         </Row>
     );

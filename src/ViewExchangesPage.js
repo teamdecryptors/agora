@@ -74,14 +74,11 @@ function ViewExchangesPage(props) {
 
         setIsRetrievingResults(true);
 
-        if (searchType === searchTypes.QUOTE_AMOUNT) {
-            baseUrl += "/" + quoteCurrency;
-        }
-        else {
-            baseUrl += "/" + baseCurrency + "/" + quoteCurrency;
+        if (searchType === searchTypes.PAIR) {
+            baseUrl += "/" + baseCurrency;
         }
 
-        baseUrl += "/" + amount;
+        baseUrl += "/" + quoteCurrency + "/" + amount;
 
         let response = await fetch(baseUrl);
         let offerings = await response.json();

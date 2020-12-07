@@ -2,12 +2,12 @@
     font-size: 1.75rem;
 }
 
-.arrow {
-    display: inline
-}
-
 .currency {
     font-size: 1.5rem;
+}
+
+.exchangeName {
+    font-size: 1.25rem;
 }
 
 .favoriteButton {
