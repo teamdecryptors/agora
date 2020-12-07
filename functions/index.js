@@ -371,5 +371,16 @@ app.get("/api/offerings/asks/marketDepth/:currency/:exchange/:cryptoCurrency", (
     })
 })
 
+app.get("/api/favorites", (res, req) => {
+    let sessionID = req.session.id;
+    let result = getFavorites(sessionID);
+    res.json(result);
+})
+
+function getFavorites(sessionID) {
+    db.ref("FAVORITES/" + sessionID).on('Value', (snapshot) => {
+        return snapshot.val();
+    })
+}
 
 exports.RESTEndpoints = functions.https.onRequest(app);
