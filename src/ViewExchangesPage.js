@@ -61,6 +61,7 @@ function ViewExchangesPage(props) {
         useState(transactionTypes.BUY);
     const [searchResults, setSearchResults] = useState([]);
     const [isRetrievingResults, setIsRetrievingResults] = useState(false);
+    const [searchResultBases, setResultBases] = useState([]);
 
     const shouldMoveSearchBoxToTop = useMemo(() => {
         return searchResults.length > 0;
@@ -69,7 +70,13 @@ function ViewExchangesPage(props) {
     const onSearchBoxSearchButtonClick = async () => {
         let baseUrl = "https://agora.bid/api/offerings";
 
-        baseUrl += "/" + transactionType + "/" + searchType;
+        if(transactionType === transactionTypes.BUY){
+            baseUrl += "/" + "ask";
+        }else{
+            baseUrl += "/" + "bid"
+        }
+
+        baseUrl += "/" + searchType;
 
         setIsRetrievingResults(true);
 
@@ -160,6 +167,11 @@ function ViewExchangesPage(props) {
                             <Spinner animation="border" />
                         </Col>
                     </Row>
+                }
+                {
+                    searchResults.map((result) => {
+                        searchResultBases.add(result.CryptoCurrency);
+                    })
                 }
                 {
                     searchType === searchTypes.PAIR &&
