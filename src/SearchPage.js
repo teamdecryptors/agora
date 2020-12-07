@@ -4,13 +4,9 @@ import Col from 'react-bootstrap/Col';
 import Spinner from 'react-bootstrap/Spinner';
 import ToggleButtonGroup from 'react-bootstrap/ToggleButtonGroup';
 import ToggleButton from 'react-bootstrap/ToggleButton';
-import { Icon } from '@iconify/react';
-import Collapsible from 'react-collapsible';
-import { CaretDownFill } from 'react-bootstrap-icons';
 import SearchBox from './SearchBox';
 import { 
     searchTypes,
-    currencies,
     baseCurrencies,
     quoteCurrencies,
     transactionTypes
@@ -18,6 +14,7 @@ import {
 import './SearchPage.css';
 import ExchangeResult from "./ExchangeResult";
 import HandleErrors from "./HandleErrors";
+import BaseResult from './BaseResult';
 
 function moveSearchBoxToMiddle() {
     const searchPageWrapper = 
@@ -46,12 +43,6 @@ function moveSearchBoxToTop() {
     searchPageWrapper.classList.add("pt-5");
 }
 
-function checkAmount(amount){
-    if (amount < 0 || isNaN(amount) || amount === '-0'){
-        return <HandleErrors/>
-    }
-}
-
 function SearchPage(props) {
     const defaultBaseCurrency = baseCurrencies[0];
     const defaultQuoteCurrency = quoteCurrencies[0];
@@ -59,18 +50,27 @@ function SearchPage(props) {
     const [searchType, setSearchType] = useState(searchTypes.QUOTE_AMOUNT);
     const [baseCurrency, setBaseCurrency] = useState(defaultBaseCurrency);
     const [quoteCurrency, setQuoteCurrency] = useState(defaultQuoteCurrency);
-    const [amount, setAmount] = useState(0);
+    const [amount, setAmount] = useState(1);
     const [transactionType, setTransactionType] =
         useState(transactionTypes.BUY);
     const [searchResults, setSearchResults] = useState([]);
     const [isRetrievingResults, setIsRetrievingResults] = useState(false);
-    const [searchResultBases, setResultBases] = useState([]);
+    const [searchResultBases, setSearchResultBases] = useState([]);
+    const [lastSearchType, setLastSearchType] = useState(searchType);
+
+    const isError = useMemo(() => amount <= 0 || isNaN(amount), [amount]);
+    const [showError, setShowError] = useState(false);
 
     const shouldMoveSearchBoxToTop = useMemo(() => {
         return searchResults.length > 0;
     }, [searchResults.length]);
 
     const onSearchBoxSearchButtonClick = async () => {
+        if (isError) {
+            setShowError(true);
+            return;
+        }
+
         let baseUrl = "https://agora.bid/api/offerings";
 
         baseUrl += "/" + transactionType + "/" + searchType;
@@ -92,13 +92,10 @@ function SearchPage(props) {
         }
 
         setSearchResults(offerings.offerings);
+        setLastSearchType(searchType);
 
         setIsRetrievingResults(false);
     };
-
-    function onlyUnique(value, index, self) {
-        return self.indexOf(value) === index;
-    }
 
     useEffect(() => {
         if (shouldMoveSearchBoxToTop) {
@@ -109,9 +106,25 @@ function SearchPage(props) {
         }
     }, [shouldMoveSearchBoxToTop, isRetrievingResults]);
 
+    useEffect(() => {
+        const newSearchResultBases = [];
+
+        for (let result of searchResults) {
+            if (!newSearchResultBases.includes(result.CryptoCurrency)) {
+                newSearchResultBases.push(result.CryptoCurrency);
+            }
+        }
+
+        setSearchResultBases(newSearchResultBases);
+    }, [searchResults]);
+
     return (
         <Row id="searchPageWrapper">
             <Col>
+                {
+                    showError && 
+                    <HandleErrors onCloseError={setShowError} />
+                }
                 <Row className="justify-content-center">
                     <Col xs="auto">
                         <ToggleButtonGroup
@@ -156,9 +169,6 @@ function SearchPage(props) {
                     onSearchButtonClick={onSearchBoxSearchButtonClick}
                 />
                 {
-                    checkAmount(amount)
-                }
-                {
                     isRetrievingResults &&
                     <Row className="mt-2 mb-4">
                         <Col className="text-center">
@@ -167,14 +177,24 @@ function SearchPage(props) {
                     </Row>
                 }
                 {
-                    searchResults.map((result) => {
-                        searchResultBases.push(result.CryptoCurrency);
-                    })
+                    lastSearchType === searchTypes.QUOTE_AMOUNT &&
+                        searchResultBases.map((currency, index) => {
+                            const baseResults = searchResults.filter((result) => {
+                                return result.CryptoCurrency === currency;
+                            });
+
+                            return (
+                                <BaseResult
+                                    key={`${currency}-${index}`}
+                                    base={currency}
+                                    results={baseResults}
+                                    searchType={lastSearchType}
+                                />
+                            );
+                        })
                 }
-                
                 {
-                    searchType === searchTypes.PAIR &&
-                        searchResults.length > 0 &&
+                    lastSearchType === searchTypes.PAIR &&
                         searchResults.map((result, index) => {
                             return (
                                 <ExchangeResult
@@ -185,53 +205,10 @@ function SearchPage(props) {
                                     price={result.Price}
                                     baseCurrency={result.CryptoCurrency}
                                     quoteCurrency={result.Currency}
-                                    searchType={searchType}
+                                    searchType={lastSearchType}
                                 />);
                         })
                 }
-                {
-                    searchType === searchTypes.QUOTE_AMOUNT &&
-                        searchResults.length > 0 &&
-                        searchResultBases.filter(onlyUnique).map((base) => {
-                            const quoteSearchResultHeader = (
-                                <Row className="align-items-center">
-                                    <Col>
-                                        <span className="d-flex align-items-center">
-                                            <Icon icon={currencies[base].icon} className="mr-2" />
-                                            {currencies[base].name} ({base})
-                                        </span>
-                                    </Col>
-                                    <Col xs="auto" className="mx-1">
-                                        <CaretDownFill />
-                                    </Col>
-                                </Row>
-                            );
-
-                            return(
-                                <Collapsible trigger={quoteSearchResultHeader}>
-                                    <div style={{width:'100%'}} class="content">
-                                        {   
-                                            searchResults.filter((result) => result.CryptoCurrency === base).map((result, index) => {
-                                                return (
-                                                    <ExchangeResult
-                                                        key={`${result.Exchange}-${index}`}
-                                                        exchange={result.Exchange}
-                                                        transactionType={result.TransactionType}
-                                                        amount={result.Amount}
-                                                        price={result.Price}
-                                                        baseCurrency={result.CryptoCurrency}
-                                                        quoteCurrency={result.Currency}
-                                                        searchType={searchType}
-                                                    />
-                                                );
-                                            })
-                                        }
-                                    </div>
-                                </Collapsible>
-                            );
-                        })
-                        
-                    }
             </Col>
         </Row>
     );
