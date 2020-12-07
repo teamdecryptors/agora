@@ -59,6 +59,7 @@ function FavoritesPage() {
                                 transactionType={favorite.action}
                                 baseCurrency={favorite.crypto}
                                 quoteCurrency={favorite.currency}
+                                defaultStarColor={'gold'}
                                 searchType={searchTypes.PAIR}
                             />
                         );

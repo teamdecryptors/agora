@@ -130,8 +130,8 @@ function SearchPage(props) {
                 }
                 {
                     !shouldMoveSearchBoxToTop &&
-                    <Row className="justify-content-center" style={{marginTop:'-200px', marginBottom:'50px'}}>
-                    <img src={logo} alt="logo" width="20%" height="20%"/>
+                    <Row className="justify-content-center mb-4">
+                        <img src={logo} alt="logo" width="15%" height="15%"/>
                     </Row>
                 }
                 <Row className="justify-content-center">

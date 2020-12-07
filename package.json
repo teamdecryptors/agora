@@ -11,6 +11,8 @@
     "bootstrap": "^4.5.3",
     "emailjs-com": "^2.6.4",
     "express-session": "^1.17.1",
+    "firebase-admin": "^9.4.1",
+    "firestore-store": "^2.0.2",
     "react": "^17.0.1",
     "react-bootstrap": "^1.4.0",
     "react-bootstrap-icons": "^1.1.0",

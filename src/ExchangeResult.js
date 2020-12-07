@@ -37,7 +37,7 @@ function ExchangeResult(props) {
                   exchange: props.exchange,
                   crypto: props.baseCurrency,
                   currency: props.quoteCurrency,
-                  action: transaction
+                  action: props.transactionType
                 })
             });
 
@@ -60,7 +60,7 @@ function ExchangeResult(props) {
                   exchange: props.exchange,
                   crypto: props.baseCurrency,
                   currency: props.quoteCurrency,
-                  action: transaction
+                  action: props.transactionType
                 })
             });
 

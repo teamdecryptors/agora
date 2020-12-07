@@ -5,11 +5,28 @@ const express = require('express');
 
 // The Firebase Admin SDK to access Cloud Firestore.
 const admin = require('firebase-admin');
-const db = admin.initializeApp().database();
+const initApp = admin.initializeApp();
+const db = initApp.database();
+// const firestoreDb = initApp.firestore();
+// const FirestoreStore = require('firestore-store')(session);
+const MemoryStore = require('memorystore')(session);
 
 const app = express();
-app.use(session({secret: "FAEYRHASERFE", resave: true, 
-    saveUninitialized: true}));
+/**
+app.use(session({store: new FirestoreStore({database: firestoreDb}),
+    name: "__session",
+    secret: "FAEYRHASERFE",
+    resave: true,
+    saveUninitialized: true}));*/
+
+app.use(session({
+    cookie: { maxAge: 86400000},
+    store: new MemoryStore({
+        checkPeriod: 86400000
+    }),
+    secret: "FAEYRHASERFE",
+    rolling: false,
+    resave: false}));
 
 const cryptoSigFigs = 5;
 const round = (number, decimalPlaces) => {
@@ -31,7 +48,8 @@ app.get('/api/offerings/asks/budget/:currency/:amount', (req,res) => {
     //order children by price so we can compare with budget constraint
     db.ref(databasePath).on('value', (snapshot) => {
         let result = snapshot.val();
-        db.ref("FAVORITES/" + req.session.id).on('value', (snapshot) => {
+        let tempId = 'tempId'; // req.session.id
+        db.ref("FAVORITES/" + tempId).on('value', (snapshot) => {
             let favorites = snapshot.val();
             //console.log(favorites);
             //for each exchange offered
@@ -73,7 +91,7 @@ app.get('/api/offerings/asks/budget/:currency/:amount', (req,res) => {
 
                     var fav = false;
                     if(favorites != null) {
-                        let record = createFavoriteRecordName(exchange, crypto, req.params.currency, "ask");
+                        let record = createFavoriteRecordName(exchange, crypto, req.params.currency, "asks");
                        
                         if(favorites[record] == null){
                             fav = false;
@@ -88,7 +106,7 @@ app.get('/api/offerings/asks/budget/:currency/:amount', (req,res) => {
                             "Amount": round(amount, cryptoSigFigs),
                             "Currency": req.params.currency,
                             "Price" : round(price, 2),
-                            "Action": "Asks",
+                            "Action": "asks",
                             "isFavorited": fav
                         });
                 }                     
@@ -110,7 +128,8 @@ app.get('/api/offerings/bids/budget/:currency/:amount', (req, res) => {
   //order children by price so we can compare with budget constraint
   db.ref(databasePath).on('value', (snapshot) => {
         let result = snapshot.val();
-        db.ref("FAVORITES/" + req.session.id).on('value', (snapshot) => {
+        let tempId = "tempId"; // req.session.id
+        db.ref("FAVORITES/" + tempId).on('value', (snapshot) => {
           let favorites = snapshot.val();
           //for each exchange offered
           for(exchange in result) {                       
@@ -150,7 +169,7 @@ app.get('/api/offerings/bids/budget/:currency/:amount', (req, res) => {
                   //get the favorite report name
                   var fav = false;
                 if(favorites != null) {
-                    let record = createFavoriteRecordName(exchange, crypto, req.params.currency, "BID");
+                    let record = createFavoriteRecordName(exchange, crypto, req.params.currency, "bids");
                    
                     if(favorites[record] == null){
                         fav = false;
@@ -166,7 +185,7 @@ app.get('/api/offerings/bids/budget/:currency/:amount', (req, res) => {
                           "Amount": round(amount, cryptoSigFigs),
                           "Currency": req.params.currency,
                           "Price" : round(price, 2),
-                          "Action": "Bid",
+                          "Action": "bids",
                           "isFavorited": fav
                       });
               }                
@@ -189,7 +208,8 @@ app.get("/api/offerings/asks/pair/:cryptoCurrency/:currency/:amount", async (req
     //order children by price so we can compare with budget constraint
     db.ref(databasePath).on('value', (snapshot) => {
         let result = snapshot.val();
-        db.ref("FAVORITES/" + req.session.id).on('value', (snapshot) => {
+        let tempId = "tempId"; // req.session.id
+        db.ref("FAVORITES/" + tempId).on('value', (snapshot) => {
             let favorites = snapshot.val();
             
             //for each exchange offered
@@ -228,7 +248,7 @@ app.get("/api/offerings/asks/pair/:cryptoCurrency/:currency/:amount", async (req
                 //get the favorite report name
                 var fav = false;
                 if(favorites != null) {
-                    let record = createFavoriteRecordName(exchange, crypto, req.params.currency, "ask");
+                    let record = createFavoriteRecordName(exchange, crypto, req.params.currency, "asks");
                    
                     if(favorites[record] == null){
                         fav = false;
@@ -244,7 +264,7 @@ app.get("/api/offerings/asks/pair/:cryptoCurrency/:currency/:amount", async (req
                         "Amount": round(purchasableAmount, cryptoSigFigs),
                         "Currency": req.params.currency,
                         "Price" : round(cost, 2),
-                        "Action": "Asks",
+                        "Action": "asks",
                         "isFavorited": fav
                     });         
                
@@ -263,7 +283,8 @@ app.get('/api/offerings/bids/pair/:cryptoCurrency/:currency/:amount', (req, res)
     //order children by price so we can compare with budget constraint
     db.ref(databasePath).on('value', (snapshot) => {
         let result = snapshot.val();
-        db.ref("FAVORITES/" + req.session.id).on('value', (snapshot) => {
+        let tempId = "tempId"; // req.session.id
+        db.ref("FAVORITES/" + tempId).on('value', (snapshot) => {
             let favorites = snapshot.val();
           
             //for each exchange offered
@@ -300,7 +321,7 @@ app.get('/api/offerings/bids/pair/:cryptoCurrency/:currency/:amount', (req, res)
 
                 var fav = false;
                 if(favorites != null) {
-                    let record = createFavoriteRecordName(exchange, crypto, req.params.currency, "BID");
+                    let record = createFavoriteRecordName(exchange, crypto, req.params.currency, "bids");
                    
                     if(favorites[record] == null){
                         fav = false;
@@ -316,7 +337,7 @@ app.get('/api/offerings/bids/pair/:cryptoCurrency/:currency/:amount', (req, res)
                         "Amount": round(purchasableAmount, cryptoSigFigs),
                         "Currency": req.params.currency,
                         "Price" : round(cost, 2),
-                        "Action": "Bid",
+                        "Action": "bids",
                         "isFavorited": fav
                     });         
                
@@ -376,7 +397,7 @@ app.get("/api/offerings/asks/marketDepth/:currency/:exchange/:cryptoCurrency/:am
                     "Amount": round(purchasableAmount, cryptoSigFigs),
                     "Currency": req.params.currency,
                     "Price" : round(cost, 2),
-                    "Action": "Asks"
+                    "Action": "asks"
                 });         
                
            res.json(output);
@@ -394,7 +415,8 @@ app.get("/api/offerings/asks/marketDepth/:currency/:exchange/:cryptoCurrency", (
 app.get("/api/favorites", (req, res) => {
     // let sessionID = "Fdg0pUXJ5NxbaA1aKmIZOJ-TZyQMYpF-";
     res.set('Access-Control-Allow-Origin', '*');
-    let uid = req.session.id;
+    let uid = "tempId"; // req.session.id;
+    
     db.ref("FAVORITES/" + uid).on('value', (snapshot) => {
         res.json(snapshot.val());
     })
@@ -403,7 +425,7 @@ app.get("/api/favorites", (req, res) => {
 app.post("/api/favorites", (req, res) => {
     res.set('Access-Control-Allow-Origin', '*');
 
-    let uid = req.session.id;
+    let uid = "tempId"; //req.session.id;
     console.log(req.body.exchange);
     let exchange = req.body.exchange;
     let crypto = req.body.crypto;
@@ -426,7 +448,7 @@ app.post("/api/favorites", (req, res) => {
 app.delete('/api/favorites', (req, res) => {
     res.set('Access-Control-Allow-Origin', '*');
     
-    let uid = req.session.id;
+    let uid = "tempId"; // req.session.id;
     let exchange = req.body.exchange;
     let crypto = req.body.crypto;
     let currency = req.body.currency;
