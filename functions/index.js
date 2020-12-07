@@ -409,8 +409,6 @@ app.get("/api/favorites", (req, res) => {
     })
 })
 
-
-
 app.post("/api/favorites", (req, res) => {  
     res.set('Access-Control-Allow-Origin', '*'); 
     res.set('Access-Control-Allow-Headers', "GET,POST,PUT,DELETE,OPTIONS");
