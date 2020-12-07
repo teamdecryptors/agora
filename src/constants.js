@@ -366,59 +366,73 @@ export const exchanges = {
 export const Education = {
     cryptocurrency: {
         description: "A cryptocurrency is a new form of digital asset based on a network that is distributed across a large number of computers. It is a digital or virtual currency that is secured by cryptography, which makes it nearly impossible to counterfeit or double-spend. Many cryptocurrencies are decentralized networks based on blockchain technology—a distributed ledger enforced by a disparate network of computers. Cryptocurrencies are systems that allow for the secure payments online which are denominated in terms of virtual 'tokens', which are represented by ledger entries internal to the system. ",
-        image: cryptocurrency
+        image: cryptocurrency,
+        heading: "What is cryptocurrency?"
     },
     blockchain: {
         description: "Blockchain is a system of recording information in a way that makes it difficult or impossible to change, hack, or cheat the system. A blockchain is essentially a digital ledger of transactions that is duplicated and distributed across the entire network of computer systems on the blockchain. Each block in the chain contains a number of transactions, and every time a new transaction occurs on the blockchain, a record of that transaction is added to every participant’s ledger. The decentralized database managed by multiple participants is known as Distributed Ledger Technology (DLT).",
-        image: blockchain
+        image: blockchain,
+        heading: "What is blockchain?"
     },
     distributedLedger: {
         description: "A distributed ledger is a database that is consensually shared and synchronized across multiple sites, institutions, or geographies, accessible by multiple people. It allows transactions to have public 'witnesses'. The participant at each node of the network can access the recordings shared across that network and can own an identical copy of it. Any changes or additions made to the ledger are reflected and copied to all participants in a matter of seconds or minutes.",
-        image: distributedLedger
+        image: distributedLedger,
+        heading: "What is a distributed ledger?"
     },
     exchange: {
         description: "An exchange is a marketplace where securities, commodities, derivatives and other financial instruments are traded (in our case Cryptocurrencies). The core function of an exchange is to ensure fair and orderly trading and the efficient dissemination of price information for any securities trading on that exchange. Exchanges give companies, governments, and other groups a platform from which to sell securities to the investing public.",
-        image: exchange
+        image: exchange,
+        heading: "What is an exchange?"
     },
     exchangesDifference: {
         description:"Each exchange primarily offers a different interface and access to different markets. When buying or selling on an exchange you can buy or sell only to other parties on the same exchange. As a result due to different users, different amounts of currency available on each exchange, and different transaction fees charged by each exchange, the prices to buy or sell the same currency will be different on different exchanges, which is what Agora aims to show.",
-        image: exchangeDifference
+        image: exchangeDifference,
+        heading: "What is the difference between exchanges?"
     },
     bitcoin: {
         description: "Bitcoin is a collection of computers, or nodes, that all run Bitcoin's code and store its blockchain. A blockchain can be thought of as a collection of blocks. In each block is a collection of transactions. Because all these computers running the blockchain have the same list of blocks and transactions and can transparently see these new blocks being filled with new Bitcoin transactions, no one can cheat the system. Anyone, whether they run a Bitcoin 'node' or not, can see these transactions occurring live. ",
-        image: bitcoin
+        image: bitcoin,
+        heading: "What is bitcoin?"
     },
     ico: {
         description: "An initial coin offering (ICO) is the cryptocurrency industry’s equivalent to an initial public offering (IPO). A company looking to raise money to create a new coin, app, or service launches an ICO as a way to raise funds. Interested investors can buy into the offering and receive a new cryptocurrency token issued by the company. This token may have some utility in using the product or service the company is offering, or it may just represent a stake in the company or project.",
-        image: ico
+        image: ico,
+        heading: "What is an ICO?"
     },
     mining: {
         description: "Cryptocurrency mining is the process in which transactions between users are verified and added to the blockchain public ledger. The process of mining is also responsible for introducing new coins into the existing circulating supply and is one of the key elements that allow cryptocurrencies to work as a peer-to-peer decentralized network, without the need for a third party central authority. Miners are getting paid for their work as auditors. They are doing the work of verifying the legitimacy of Bitcoin transactions. By verifying transactions, miners are helping to prevent the 'double-spending problem'.",
-        image: mining
+        image: mining,
+        heading: "What is cryptocurrency mining?"
     },
     bid: {
         description: "A bid is an offer made by an investor, trader, or dealer in an effort to buy a security, commodity, or currency. A bid stipulates the price the potential buyer is willing to pay, as well as the quantity he or she will purchase, for that proposed price.",
-        image: bid
+        image: bid,
+        heading: "What is a bid?"
     },
     ask: {
         description: "The ask is the price a seller is willing to accept for a security, which is often referred to as the offer price. Along with the price, the ask quote might also stipulate the amount of the security available to be sold at the stated price.",
-        image: ask
+        image: ask,
+        heading: "What is an ask?"
     },
     depthLevel: {
         description: "Market depth refers to a market's ability to sustain relatively large market orders without much impacting the price of the security. Market depth considers the overall level and breadth of open orders, bids, and offers, and usually refers to trading within an individual security. The more buy and sell orders that exist, the greater the depth of the market is. Because the market is made of many small buy orders and sell orders, the price of buying a currency can vary widely based on the amount. By accounting for quantities, Agora aims to make this more clear.",
-        image: depthLevel
+        image: depthLevel,
+        heading: "What is a depth level?"
     },
     marketOrder: {
         description: "A market order is a request by an investor to buy or sell a security at the best available price in the current market. It is widely considered the fastest and most reliable way to enter or exit a holding and provides the most likely method of getting in or out of a holding quickly.",
-        image: marketOrder
+        image: marketOrder,
+        heading: "What is a market order?"
     },
     limitOrder: {
         description: "A limit order is a type of order to purchase or sell an asset at a specified price or better. For buy limit orders, the order will be executed only at the limit price or a lower one, while for sell limit orders, the order will be executed only at the limit price or a higher one.",
-        image: limitOrder
+        image: limitOrder,
+        heading: "What is a limit order?"
     },
     pairs: {
         description: "A currency pair is a combination of two different currencies, with the value of one currency being quoted in another. The first currency in a pair is called the base currency and the second currency is called the quote currency. For example if we know the price of 1 Agora Coin (AC) is $100 we can represent that pair as ACUSD. Here, the price of the base currency AC is given in terms of the quote currency US dollars, in order to communicate what is essentially the exchange rate or cost to buy/sell one Agora Coin.",
-        image: pairs
+        image: pairs,
+        heading: "What is a currency pair?"
     }
 }
 
