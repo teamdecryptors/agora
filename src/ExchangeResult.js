@@ -90,7 +90,7 @@ function ExchangeResult(props) {
                     </Row>
                 </a>
             </Col>
-            <Col xs={1} className="text-center mx-2">
+            <Col xs={1} className="text-center mx-1">
                 <StarFill
                     color={starColor}
                     className="favoriteButton"

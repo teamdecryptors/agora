@@ -2,6 +2,11 @@
     font-size: 1.75rem;
 }
 
+.Collapsible__trigger:hover {
+    cursor: pointer;
+    background: #6d6d6d;
+}
+
 .currency {
     font-size: 1.5rem;
 }
