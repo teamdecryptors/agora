@@ -1,16 +1,20 @@
-import React, { useState } from 'react';
-import Alert from 'react-bootstrap/Alert'
+import React from 'react';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+import Alert from 'react-bootstrap/Alert';
 
-function HandleErrors(){
-    const [show, setShow] = useState(true);
-    if (show){
-            return(
-                <Alert variant="danger" onClose={() => setShow(false)}>
-                <Alert.Heading>Input must be greater than 0 or numerical</Alert.Heading>
+function HandleErrors(props){
+    return(
+        <Row>
+            <Col>
+                <Alert variant="danger" onClose={props.onCloseError} dismissible>
+                    <p className="mb-0">
+                        Warning: Input must be greater than 0 and numerical.
+                    </p>
                 </Alert>
-            )
-    }
-    
+            </Col>
+        </Row>
+    );
 }
 
 export default HandleErrors;

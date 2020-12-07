@@ -9,12 +9,12 @@ import './Navbar.css';
 function Navbar(props) {
     return (
         <BootstrapNavbar bg="dark" variant="dark" fixed="top">
-            <BootstrapNavbar.Brand>
-                <img src={logo} alt="logo" width="40" height="40"/>
-            </BootstrapNavbar.Brand>
-            <p className="name">
-                a g o r a
-            </p>
+            <LinkContainer to="/" key="Search" exact>
+                <BootstrapNavbar.Brand>
+                    <img src={logo} alt="logo" width="40" height="40"/>
+                    <p className="name">a g o r a</p>
+                </BootstrapNavbar.Brand>
+            </LinkContainer>
             <Nav className="ml-auto">
                 {
                     Object.entries(pages).map(([key, value]) => {

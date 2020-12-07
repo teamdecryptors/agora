@@ -3,6 +3,25 @@
     background-color: #EDEDED;
     padding: 20px;
     padding-bottom: 10px;
+    width: 97%;
+}
+
+.successBox {
+    margin-top: 20px;
+    background-color: #7AC972;
+    padding: 20px;
+    padding-bottom: 10px;
+    color: white;
+    width: 97%;
+}
+
+.failureBox {
+    margin-top: 20px;
+    background-color: #c95959;
+    padding: 20px;
+    padding-bottom: 10px;
+    color: white;
+    width: 97%;
 }
 
 .contactImage {
