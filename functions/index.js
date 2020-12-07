@@ -1,6 +1,6 @@
 const firebase = require('firebase-admin');
 const functions = require('firebase-functions');
-
+const session = require('express-session');
 const express = require('express');
 
 // The Firebase Admin SDK to access Cloud Firestore.
@@ -8,6 +8,7 @@ const admin = require('firebase-admin');
 const db = admin.initializeApp().database();
 
 const app = express();
+app.use(session({secret: "FAEYRHASERFE"}));
 
 const cryptoSigFigs = 5;
 const round = (number, decimalPlaces) => {
@@ -206,7 +207,8 @@ app.get("/api/offerings/asks/pair/:cryptoCurrency/:currency/:amount", (req, res)
                 let amount = req.params.amount;  
                 //console.log(budget); 
                 
-                const offerings = result[exchange][req.params.cryptoCurrency];                               
+                const offerings = result[exchange][req.params.cryptoCurrency];  
+                if(offerings == null) { continue; }                             
                 let i = 0;
                 let cost = 0;
                 let purchasableAmount = 0;
@@ -263,7 +265,8 @@ app.get('/api/offerings/bids/pair/:cryptoCurrency/:currency/:amount', (req, res)
                 let amount = req.params.amount;  
                 //console.log(budget); 
                 
-                const offerings = result[exchange][req.params.cryptoCurrency];                               
+                const offerings = result[exchange][req.params.cryptoCurrency]; 
+                if(offerings == null) { continue; }                               
                 let i = 0;
                 let cost = 0;
                 let purchasableAmount = 0;
@@ -368,6 +371,68 @@ app.get("/api/offerings/asks/marketDepth/:currency/:exchange/:cryptoCurrency", (
         res.json(snapshot.val());
     })
 })
+
+app.get("/api/favorites", (req, res) => {
+    let sessionID = req.session.id;
+    let result = getFavorites(sessionID);
+    if(result == null) {
+        res.send("No favorites yet");
+        return;
+    }
+    res.json(result);
+})
+
+app.post("/api/favorites", (req, res) => {    
+    let uid = req.session.id;
+    console.log(req.body.exchange);
+    let exchange = req.body.exchange;
+    let crypto = req.body.crypto;
+    let currency = req.body.currency;
+    let action = req.body.action;
+    if(exchange == null || crypto == null || currency == null || action == null) {
+        res.send("invalid request");
+        return;
+    }
+
+    let recordName = createFavoriteRecordName(exchange, crypto, currency, action);
+    db.ref('FAVORITES/' + uid + "/" + recordName).set({
+        "exchange": exchange,
+        "crypto": crypto,
+        "currency": currency,
+        "action": action
+    })
+    res.send("favorites updated");
+})
+
+app.delete('/api/favorites', (req, res) => {
+    let uid = req.session.id;
+    let exchange = req.body.exchange;
+    let crypto = req.body.crypto;
+    let currency = req.body.currency;
+    let action = req.body.action;
+    if(exchange == null || crypto == null || currency == null || action == null) {
+        res.send("invalid request");
+        return;
+    }
+
+    let recordName = createFavoriteRecordName(exchange, crypto, currency, action);
+    console.log(recordName);
+    db.ref('FAVORITES/' + uid + "/" + recordName).remove();
+    res.send("Succesful deletion");
+})
+
+function getFavorites(sessionID) {
+    console.log(sessionID);
+    db.ref("FAVORITES/" + sessionID).on('value', (snapshot) => {
+        console.log(snapshot.val());
+        return snapshot.val();
+    })
+}
+
+function createFavoriteRecordName(ex, cry, curr, act) {
+    return ex + cry + curr + act;
+}
+
 
 
 exports.RESTEndpoints = functions.https.onRequest(app);

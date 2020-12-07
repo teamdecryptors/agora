@@ -61,6 +61,7 @@ function ViewExchangesPage(props) {
         useState(transactionTypes.BUY);
     const [searchResults, setSearchResults] = useState([]);
     const [isRetrievingResults, setIsRetrievingResults] = useState(false);
+    const [searchResultBases, setResultBases] = useState([]);
 
     const shouldMoveSearchBoxToTop = useMemo(() => {
         return searchResults.length > 0;
@@ -160,6 +161,11 @@ function ViewExchangesPage(props) {
                             <Spinner animation="border" />
                         </Col>
                     </Row>
+                }
+                {
+                    searchResults.map((result) => {
+                        searchResultBases.push(result.CryptoCurrency);
+                    })
                 }
                 {
                     searchType === searchTypes.PAIR &&

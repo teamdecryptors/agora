@@ -192,8 +192,8 @@ export const searchTypes = {
 };
 
 export const transactionTypes = {
-    BUY: "bids",
-    SELL: "asks"
+    BUY: "asks",
+    SELL: "bids"
 };
 
 export const teamMembers = {
