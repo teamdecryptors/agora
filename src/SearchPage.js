@@ -6,6 +6,7 @@ import ToggleButtonGroup from 'react-bootstrap/ToggleButtonGroup';
 import ToggleButton from 'react-bootstrap/ToggleButton';
 import { Icon } from '@iconify/react';
 import Collapsible from 'react-collapsible';
+import { CaretDownFill } from 'react-bootstrap-icons';
 import SearchBox from './SearchBox';
 import { 
     searchTypes,
@@ -193,10 +194,17 @@ function SearchPage(props) {
                         searchResults.length > 0 &&
                         searchResultBases.filter(onlyUnique).map((base) => {
                             const quoteSearchResultHeader = (
-                                <span className="d-flex align-items-center">
-                                    <Icon icon={currencies[base].icon} className="mr-2" />
-                                    {currencies[base].name} ({base})
-                                </span>
+                                <Row className="align-items-center">
+                                    <Col>
+                                        <span className="d-flex align-items-center">
+                                            <Icon icon={currencies[base].icon} className="mr-2" />
+                                            {currencies[base].name} ({base})
+                                        </span>
+                                    </Col>
+                                    <Col xs="auto" className="mx-1">
+                                        <CaretDownFill />
+                                    </Col>
+                                </Row>
                             );
 
                             return(
