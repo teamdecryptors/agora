@@ -12,7 +12,7 @@ import {
 
 function App() {
   const [currentPage, setCurrentPage] = 
-    useState(pages.EXCHANGES);
+    useState(pages.SEARCH);
 
   useEffect(() => {
     document.title = "agora - " + currentPage.name;

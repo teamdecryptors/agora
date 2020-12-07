@@ -18,7 +18,7 @@ import dashIcon from '@iconify-icons/cryptocurrency/dash';
 import xtzIcon from '@iconify-icons/cryptocurrency/xtz';
 import usdcIcon from '@iconify-icons/cryptocurrency/usdc';
 
-import ViewExchangesPage from './ViewExchangesPage';
+import SearchPage from './SearchPage';
 import FavoritesPage from './FavoritesPage';
 import EducationPage from './EducationPage';
 import AboutPage from './AboutPage';
@@ -73,10 +73,10 @@ import pairs from './educationPics/pairs.jpg';
 
 
 export const pages = {
-    EXCHANGES: {
-        name: "Exchanges",
+    SEARCH: {
+        name: "Search",
         pathname: "/",
-        PageComponent: ViewExchangesPage
+        PageComponent: SearchPage
     },
     FAVORITES: {
         name: "Favorites",
@@ -122,7 +122,7 @@ export const currencies = {
         icon: ltcIcon
     },
     XRP: {
-        name: "XRP (Ripple)",
+        name: "Ripple",
         icon: xrpIcon
     },
     ZEC: {

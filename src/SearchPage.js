@@ -4,21 +4,23 @@ import Col from 'react-bootstrap/Col';
 import Spinner from 'react-bootstrap/Spinner';
 import ToggleButtonGroup from 'react-bootstrap/ToggleButtonGroup';
 import ToggleButton from 'react-bootstrap/ToggleButton';
+import { Icon } from '@iconify/react';
+import Collapsible from 'react-collapsible';
 import SearchBox from './SearchBox';
 import { 
     searchTypes,
+    currencies,
     baseCurrencies,
     quoteCurrencies,
     transactionTypes
 } from './constants';
-import './ViewExchangesPage.css';
+import './SearchPage.css';
 import ExchangeResult from "./ExchangeResult";
 import HandleErrors from "./HandleErrors";
-import Collapsible from 'react-collapsible';
 
 function moveSearchBoxToMiddle() {
-    const viewExchangesPageWrapper = 
-            document.getElementById("viewExchangesPageWrapper");
+    const searchPageWrapper = 
+            document.getElementById("searchPageWrapper");
     const root = document.getElementById("root");
         
     document.documentElement.classList.add("h-100"); // <html>
@@ -26,12 +28,12 @@ function moveSearchBoxToMiddle() {
     root.classList.add("h-100");
     root.getElementsByClassName("container")[0].classList.add("h-100");
         
-    viewExchangesPageWrapper.classList.add("h-100", "align-items-center");
+    searchPageWrapper.classList.add("h-100", "align-items-center");
 }
 
 function moveSearchBoxToTop() {
-    const viewExchangesPageWrapper = 
-            document.getElementById("viewExchangesPageWrapper");
+    const searchPageWrapper = 
+            document.getElementById("searchPageWrapper");
     const root = document.getElementById("root");
         
     document.documentElement.classList.remove("h-100"); // <html>
@@ -39,8 +41,8 @@ function moveSearchBoxToTop() {
     root.classList.remove("h-100");
     root.getElementsByClassName("container")[0].classList.remove("h-100");
         
-    viewExchangesPageWrapper.classList.remove("h-100", "align-items-center");
-    viewExchangesPageWrapper.classList.add("pt-5");
+    searchPageWrapper.classList.remove("h-100", "align-items-center");
+    searchPageWrapper.classList.add("pt-5");
 }
 
 function checkAmount(amount){
@@ -49,7 +51,7 @@ function checkAmount(amount){
     }
 }
 
-function ViewExchangesPage(props) {
+function SearchPage(props) {
     const defaultBaseCurrency = baseCurrencies[0];
     const defaultQuoteCurrency = quoteCurrencies[0];
 
@@ -107,7 +109,7 @@ function ViewExchangesPage(props) {
     }, [shouldMoveSearchBoxToTop, isRetrievingResults]);
 
     return (
-        <Row id="viewExchangesPageWrapper">
+        <Row id="searchPageWrapper">
             <Col>
                 <Row className="justify-content-center">
                     <Col xs="auto">
@@ -190,8 +192,15 @@ function ViewExchangesPage(props) {
                     searchType === searchTypes.QUOTE_AMOUNT &&
                         searchResults.length > 0 &&
                         searchResultBases.filter(onlyUnique).map((base) => {
+                            const quoteSearchResultHeader = (
+                                <span className="d-flex align-items-center">
+                                    <Icon icon={currencies[base].icon} className="mr-2" />
+                                    {currencies[base].name} ({base})
+                                </span>
+                            );
+
                             return(
-                                <Collapsible trigger={base}>
+                                <Collapsible trigger={quoteSearchResultHeader}>
                                     <div style={{width:'100%'}} class="content">
                                         {   
                                             searchResults.filter((result) => result.CryptoCurrency === base).map((result, index) => {
@@ -220,4 +229,4 @@ function ViewExchangesPage(props) {
     );
 }
 
-export default ViewExchangesPage;
+export default SearchPage;
