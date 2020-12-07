@@ -66,11 +66,12 @@ function SearchPage(props) {
     }, [searchResults.length]);
 
     const onSearchBoxSearchButtonClick = async () => {
+        setShowError(isError);
+
         if (isError) {
-            setShowError(true);
             return;
         }
-
+        
         let baseUrl = "https://agora.bid/api/offerings";
 
         baseUrl += "/" + transactionType + "/" + searchType;
