@@ -5,10 +5,21 @@ const express = require('express');
 
 // The Firebase Admin SDK to access Cloud Firestore.
 const admin = require('firebase-admin');
+const cors = require('cors')({origin: true});
 const db = admin.initializeApp().database();
 
 const app = express();
-app.use(session({secret: "FAEYRHASERFE"}));
+
+app.use(cors);
+app.use(session(
+    {
+        secret: "FAEYRHASERFE", 
+        resave: true,
+        saveUninitialized: true,
+        cookie: {
+        maxAge: 24 * 3600 * 365 *100
+    }
+}));
 
 const cryptoSigFigs = 5;
 const round = (number, decimalPlaces) => {
@@ -391,13 +402,18 @@ app.get("/api/offerings/asks/marketDepth/:currency/:exchange/:cryptoCurrency", (
 })
 
 app.get("/api/favorites", (req, res) => {
+    res.set('Access-Control-Allow-Origin', '*');
     let sessionID = "Fdg0pUXJ5NxbaA1aKmIZOJ-TZyQMYpF-";
     db.ref("FAVORITES/" + sessionID).on('value', (snapshot) => {
         res.json(snapshot.val());
     })
 })
 
-app.post("/api/favorites", (req, res) => {    
+
+
+app.post("/api/favorites", (req, res) => {  
+    res.set('Access-Control-Allow-Origin', '*'); 
+    res.set('Access-Control-Allow-Headers', "GET,POST,PUT,DELETE,OPTIONS");
     let uid = req.session.id;
     console.log(req.body.exchange);
     let exchange = req.body.exchange;
@@ -418,7 +434,11 @@ app.post("/api/favorites", (req, res) => {
     res.send("favorites updated");
 })
 
+
+
 app.delete('/api/favorites', (req, res) => {
+    res.set('Access-Control-Allow-Origin', '*');
+    res.set('Access-Control-Allow-Headers', "GET,POST,PUT,DELETE,OPTIONS");
     let uid = req.session.id;
     let exchange = req.body.exchange;
     let crypto = req.body.crypto;
