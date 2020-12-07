@@ -15,6 +15,7 @@ import './SearchPage.css';
 import ExchangeResult from "./ExchangeResult";
 import HandleErrors from "./HandleErrors";
 import BaseResult from './BaseResult';
+import logo from './logo.svg';
 
 function moveSearchBoxToMiddle() {
     const searchPageWrapper = 
@@ -119,12 +120,18 @@ function SearchPage(props) {
         setSearchResultBases(newSearchResultBases);
     }, [searchResults]);
 
-    return (
+    return (    
         <Row id="searchPageWrapper">
             <Col>
                 {
                     showError && 
                     <HandleErrors onCloseError={setShowError} />
+                }
+                {
+                    !shouldMoveSearchBoxToTop &&
+                    <Row className="justify-content-center" style={{marginTop:'-200px', marginBottom:'50px'}}>
+                    <img src={logo} alt="logo" width="20%" height="20%"/>
+                    </Row>
                 }
                 <Row className="justify-content-center">
                     <Col xs="auto">
