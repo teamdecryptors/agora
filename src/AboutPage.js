@@ -2,18 +2,19 @@ import React from 'react';
 import AboutPageProfile from './AboutPageProfile';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import Container from 'react-bootstrap/Container';
 import { teamMembers } from './constants';
+import './AboutPage.css';
 
 
 function AboutPage(props) {
     return (
     <>
-        <h1 style={{margin:25}}>About Us</h1>
-        <Container>
+    <body>
+    <div class="row">
+        <h1 style={{fontWeight:'550'}}>About Us</h1>
         <Row>
             <Col className='col-7'>
-                <div style={{backgroundColor: 'lightgray'}}>
+                <div className='meetUsBox'>
                     <br/>
                     <h5 style={{marginLeft:20}}>Meet the DECRYTORS</h5>
                     <p style={{margin:20}}>
@@ -123,9 +124,9 @@ function AboutPage(props) {
                 </Row>
                 <br/>
             </Col>
-            <Col style={{marginLeft:40}}>
+            <Col className='missionCol'>
                 <Row>
-                    <div style={{backgroundColor:'lightgray'}}>
+                    <div className='missionBox'>
                     <h5 style={{margin:20}}>Our Mission</h5>
                     <p style={{margin:20}}>
                         Agora is a centralized hub for cryptocurrency. 
@@ -140,7 +141,8 @@ function AboutPage(props) {
                 </Row>
             </Col>
             </Row>
-        </Container>
+        </div>
+        </body>
     </>
     )
 }
