@@ -7,7 +7,23 @@
 .centered {
     position: absolute;
     top: 40%;
-    left: 5%;
-    width: 90%;
-    font-size: small;
+    left: 45%;
+    right:-200%;
+    text-align: center;
+}
+
+.headingLeft{
+    background-color: lightgray;
+    margin-top: 2.1%;
+    margin-left: 15%;
+    margin-right: 0%;
+    text-align: center;
+}
+
+.headingRight{
+    background-color: lightgray;
+    margin-top: 2.1%;
+    margin-left: 1.2%;
+    margin-right: 2%;
+    text-align: center;
 }
