@@ -393,7 +393,9 @@ app.post("/api/favorites", (req, res) => {
         res.send("invalid request");
         return;
     }
-    db.ref('FAVORITES/' + uid).push().set({
+
+    let recordName = createFavoriteRecordName(exchange, crypto, currency, action);
+    db.ref('FAVORITES/' + uid + "/" + recordName).set({
         "exchange": exchange,
         "crypto": crypto,
         "currency": currency,
@@ -402,12 +404,33 @@ app.post("/api/favorites", (req, res) => {
     res.send("favorites updated");
 })
 
+app.delete('/api/favorites', (req, res) => {
+    let uid = req.session.id;
+    let exchange = req.body.exchange;
+    let crypto = req.body.crypto;
+    let currency = req.body.currency;
+    let action = req.body.action;
+    if(exchange == null || crypto == null || currency == null || action == null) {
+        res.send("invalid request");
+        return;
+    }
+
+    let recordName = createFavoriteRecordName(exchange, crypto, currency, action);
+    console.log(recordName);
+    db.ref('FAVORITES/' + uid + "/" + recordName).remove();
+    res.send("Succesful deletion");
+})
+
 function getFavorites(sessionID) {
     console.log(sessionID);
     db.ref("FAVORITES/" + sessionID).on('value', (snapshot) => {
         console.log(snapshot.val());
         return snapshot.val();
     })
+}
+
+function createFavoriteRecordName(ex, cry, curr, act) {
+    return ex + cry + curr + act;
 }
 
 

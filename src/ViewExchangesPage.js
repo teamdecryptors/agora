@@ -93,6 +93,10 @@ function ViewExchangesPage(props) {
         setIsRetrievingResults(false);
     };
 
+    function onlyUnique(value, index, self) {
+        return self.indexOf(value) === index;
+    }
+
     useEffect(() => {
         if (shouldMoveSearchBoxToTop) {
             moveSearchBoxToTop();
@@ -164,6 +168,7 @@ function ViewExchangesPage(props) {
                         searchResultBases.push(result.CryptoCurrency);
                     })
                 }
+                
                 {
                     searchType === searchTypes.PAIR &&
                         searchResults.length > 0 &&
@@ -184,7 +189,7 @@ function ViewExchangesPage(props) {
                 {
                     searchType === searchTypes.QUOTE_AMOUNT &&
                         searchResults.length > 0 &&
-                        baseCurrencies.map((base) => {
+                        searchResultBases.filter(onlyUnique).map((base) => {
                             return(
                                 <Collapsible trigger={base}>
                                     <div style={{width:'100%'}} class="content">
