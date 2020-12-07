@@ -214,6 +214,7 @@ function SearchPage(props) {
                                     price={result.Price}
                                     baseCurrency={result.CryptoCurrency}
                                     quoteCurrency={result.Currency}
+                                    defaultStarColor={result.isFavorited ? 'gold' : 'lightgray'}
                                     searchType={lastSearchType}
                                 />);
                         })

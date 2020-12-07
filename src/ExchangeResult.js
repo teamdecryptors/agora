@@ -9,7 +9,7 @@ function ExchangeResult(props) {
     const { exchangeName, link, logoImage } = 
         exchanges[props.exchange];
 
-    const [starColor, setColor] = useState('lightgray');
+    const [starColor, setColor] = useState(props.defaultStarColor);
 
     const isQuoteAmountSearch = 
         props.searchType === searchTypes.QUOTE_AMOUNT;

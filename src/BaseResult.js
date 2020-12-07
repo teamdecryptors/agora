@@ -37,6 +37,7 @@ function BaseResult(props){
                                 price={result.Price}
                                 baseCurrency={result.CryptoCurrency}
                                 quoteCurrency={result.Currency}
+                                defaultStarColor={result.isFavorited ? 'gold' : 'lightgray'}
                                 searchType={props.searchType}
                             />
                         );
