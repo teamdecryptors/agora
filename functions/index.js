@@ -16,45 +16,6 @@ const round = (number, decimalPlaces) => {
     return Math.round(number * factorOfTen) / factorOfTen;
 }
 
-// These are demo endpints not for final release
-app.get('/api/offerings' , (req, res) => {
-    res.set('Access-Control-Allow-Origin', '*');
-    db.ref("TRADES/").on('value' , (snapshot) => {
-        res.json(snapshot.val());
-    });
-});
-
-app.get('/api/offerings/bids' , (req, res) => {
-    res.set('Access-Control-Allow-Origin', '*');
-    db.ref("TRADES/bids").on('value' , (snapshot) => {
-        res.json(snapshot.val());
-    });
-});
-
-app.get('/api/offerings/asks' , (req, res) => {
-    res.set('Access-Control-Allow-Origin', '*');
-    db.ref("TRADES/asks").on('value' , (snapshot) => {
-        res.json(snapshot.val());
-    });
-});
-
-app.get('/api/offerings/asks/:currency', (req, res) => {
-    res.set('Access-Control-Allow-Origin', '*');
-    let databasePath = "TRADES/asks/" + req.params.currency;
-    db.ref(databasePath).on('value', (snapshot) => {
-       res.json(snapshot.val());
-    })
-})
-
-app.get('/api/offerings/bids/:currency', (req, res) => {
-    res.set('Access-Control-Allow-Origin', '*');
-    let databasePath = "TRADES/bids/" + req.params.currency;
-    db.ref(databasePath).on('value', (snapshot) => {
-       res.json(snapshot.val());
-    })
-})
-//end of demo endpoints
-
 
 //relates to user searching how much they can buy of each crypto from different exchanges
 //with respect to their current budget
@@ -68,8 +29,10 @@ app.get('/api/offerings/asks/budget/:currency/:amount', (req,res) => {
     let output = JSON.parse(jsonOutput);
     //order children by price so we can compare with budget constraint
     db.ref(databasePath).on('value', (snapshot) => {
-            let result = snapshot.val();
-            
+        let result = snapshot.val();
+        db.ref("FAVORITES/" + req.session.id).on('value', (snapshot) => {
+            let favorites = snapshot.val();
+            //console.log(favorites);
             //for each exchange offered
             for(exchange in result) {                       
                 
@@ -107,6 +70,16 @@ app.get('/api/offerings/asks/budget/:currency/:amount', (req,res) => {
                         }
                     }
 
+                    var fav = false;
+                    if(favorites != null) {
+                        let record = createFavoriteRecordName(exchange, crypto, req.params.currency, "ask");
+                       
+                        if(favorites[record] == null){
+                            fav = false;
+                        } else {
+                            fav = true;
+                        }
+                    }
                     output['offerings'].push(
                         { 
                             "Exchange": exchange, 
@@ -114,13 +87,13 @@ app.get('/api/offerings/asks/budget/:currency/:amount', (req,res) => {
                             "Amount": round(amount, cryptoSigFigs),
                             "Currency": req.params.currency,
                             "Price" : round(price, 2),
-                            "Action": "Asks"
+                            "Action": "Asks",
+                            "isFavorited": fav
                         });
-                }                
-               
+                }                     
             }
            res.json(output);
-
+        })
     })
 })
 
@@ -135,8 +108,9 @@ app.get('/api/offerings/bids/budget/:currency/:amount', (req, res) => {
   let output = JSON.parse(jsonOutput);
   //order children by price so we can compare with budget constraint
   db.ref(databasePath).on('value', (snapshot) => {
-          let result = snapshot.val();
-          
+        let result = snapshot.val();
+        db.ref("FAVORITES/" + req.session.id).on('value', (snapshot) => {
+          let favorites = snapshot.val();
           //for each exchange offered
           for(exchange in result) {                       
               
@@ -172,6 +146,18 @@ app.get('/api/offerings/bids/budget/:currency/:amount', (req, res) => {
                       }
                   }
 
+                  //get the favorite report name
+                  var fav = false;
+                if(favorites != null) {
+                    let record = createFavoriteRecordName(exchange, crypto, req.params.currency, "BID");
+                   
+                    if(favorites[record] == null){
+                        fav = false;
+                    } else {
+                        fav = true;
+                    }
+                }
+
                   output['offerings'].push(
                       { 
                           "Exchange": exchange, 
@@ -179,17 +165,18 @@ app.get('/api/offerings/bids/budget/:currency/:amount', (req, res) => {
                           "Amount": round(amount, cryptoSigFigs),
                           "Currency": req.params.currency,
                           "Price" : round(price, 2),
-                          "Action": "Bid"
+                          "Action": "Bid",
+                          "isFavorited": fav
                       });
               }                
              
           }
          res.json(output);
-
+    })
   })
 })
 
-app.get("/api/offerings/asks/pair/:cryptoCurrency/:currency/:amount", (req, res) => {
+app.get("/api/offerings/asks/pair/:cryptoCurrency/:currency/:amount", async (req, res) => {
     res.set('Access-Control-Allow-Origin', '*');
     //strating path for the database
     const databasePath = "TRADES/asks/" + req.params.currency;
@@ -197,9 +184,12 @@ app.get("/api/offerings/asks/pair/:cryptoCurrency/:currency/:amount", (req, res)
     let jsonOutput = `{"offerings": []}`;
     //allows us to add smaller json objects to offerings array in output
     let output = JSON.parse(jsonOutput);
+
     //order children by price so we can compare with budget constraint
     db.ref(databasePath).on('value', (snapshot) => {
-            let result = snapshot.val();
+        let result = snapshot.val();
+        db.ref("FAVORITES/" + req.session.id).on('value', (snapshot) => {
+            let favorites = snapshot.val();
             
             //for each exchange offered
             for(exchange in result) {                       
@@ -233,7 +223,19 @@ app.get("/api/offerings/asks/pair/:cryptoCurrency/:currency/:amount", (req, res)
                         purchasableAmount += offeringSize;
                     }
                 } 
-  
+                
+                //get the favorite report name
+                var fav = false;
+                if(favorites != null) {
+                    let record = createFavoriteRecordName(exchange, crypto, req.params.currency, "ask");
+                   
+                    if(favorites[record] == null){
+                        fav = false;
+                    } else {
+                        fav = true;
+                    }
+                }
+                
                 output['offerings'].push(
                     { 
                         "Exchange": exchange, 
@@ -241,11 +243,13 @@ app.get("/api/offerings/asks/pair/:cryptoCurrency/:currency/:amount", (req, res)
                         "Amount": round(purchasableAmount, cryptoSigFigs),
                         "Currency": req.params.currency,
                         "Price" : round(cost, 2),
-                        "Action": "Asks"
+                        "Action": "Asks",
+                        "isFavorited": fav
                     });         
                
             }
            res.json(output);
+        })
     })
 })
 
@@ -257,7 +261,9 @@ app.get('/api/offerings/bids/pair/:cryptoCurrency/:currency/:amount', (req, res)
     let output = JSON.parse(jsonOutput);
     //order children by price so we can compare with budget constraint
     db.ref(databasePath).on('value', (snapshot) => {
-            let result = snapshot.val();
+        let result = snapshot.val();
+        db.ref("FAVORITES/" + req.session.id).on('value', (snapshot) => {
+            let favorites = snapshot.val();
           
             //for each exchange offered
             for(exchange in result) {                       
@@ -270,7 +276,6 @@ app.get('/api/offerings/bids/pair/:cryptoCurrency/:currency/:amount', (req, res)
                 let i = 0;
                 let cost = 0;
                 let purchasableAmount = 0;
-                //console.log(offerings[0])
                 while(amount > 0) {
                     let offering = offerings[i++];  
                     if(offering == null ) { break; }                  
@@ -291,6 +296,17 @@ app.get('/api/offerings/bids/pair/:cryptoCurrency/:currency/:amount', (req, res)
                         purchasableAmount += offeringSize;
                     }
                 } 
+
+                var fav = false;
+                if(favorites != null) {
+                    let record = createFavoriteRecordName(exchange, crypto, req.params.currency, "BID");
+                   
+                    if(favorites[record] == null){
+                        fav = false;
+                    } else {
+                        fav = true;
+                    }
+                }
   
                 output['offerings'].push(
                     { 
@@ -299,11 +315,13 @@ app.get('/api/offerings/bids/pair/:cryptoCurrency/:currency/:amount', (req, res)
                         "Amount": round(purchasableAmount, cryptoSigFigs),
                         "Currency": req.params.currency,
                         "Price" : round(cost, 2),
-                        "Action": "Bid"
+                        "Action": "Bid",
+                        "isFavorited": fav
                     });         
                
             }
             res.json(output);
+        })
     })
 })
 
@@ -373,13 +391,10 @@ app.get("/api/offerings/asks/marketDepth/:currency/:exchange/:cryptoCurrency", (
 })
 
 app.get("/api/favorites", (req, res) => {
-    let sessionID = req.session.id;
-    let result = getFavorites(sessionID);
-    if(result == null) {
-        res.send("No favorites yet");
-        return;
-    }
-    res.json(result);
+    let sessionID = "Fdg0pUXJ5NxbaA1aKmIZOJ-TZyQMYpF-";
+    db.ref("FAVORITES/" + sessionID).on('value', (snapshot) => {
+        res.json(snapshot.val());
+    })
 })
 
 app.post("/api/favorites", (req, res) => {    
@@ -393,7 +408,6 @@ app.post("/api/favorites", (req, res) => {
         res.send("invalid request");
         return;
     }
-
     let recordName = createFavoriteRecordName(exchange, crypto, currency, action);
     db.ref('FAVORITES/' + uid + "/" + recordName).set({
         "exchange": exchange,
@@ -421,18 +435,10 @@ app.delete('/api/favorites', (req, res) => {
     res.send("Succesful deletion");
 })
 
-function getFavorites(sessionID) {
-    console.log(sessionID);
-    db.ref("FAVORITES/" + sessionID).on('value', (snapshot) => {
-        console.log(snapshot.val());
-        return snapshot.val();
-    })
-}
-
 function createFavoriteRecordName(ex, cry, curr, act) {
-    return ex + cry + curr + act;
+    let name = ex + cry + curr + act;
+    return name.toUpperCase();
 }
-
 
 
 exports.RESTEndpoints = functions.https.onRequest(app);
