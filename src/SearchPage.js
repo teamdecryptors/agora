@@ -94,6 +94,7 @@ function SearchPage(props) {
         }
 
         setSearchResults(offerings.offerings);
+        console.log(offerings);
         setLastSearchType(searchType);
 
         setIsRetrievingResults(false);

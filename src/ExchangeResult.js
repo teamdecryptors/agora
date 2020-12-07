@@ -21,11 +21,55 @@ function ExchangeResult(props) {
         "result quoteAmountSearchResult" :
         "result pairSearchResult mb-2"
 
-    const onFavoriteButtonClick = (e) => {
-        e.preventDefault();
-        setColor(starColor === 'lightgray' ? 
-            'gold' : 
-            'lightgray');
+    const onFavoriteButtonClick = async () => {
+        let baseUrl = "https://agora.bid/api/favorites";
+
+        if (starColor === 'lightgray') {
+            setColor('gold');
+
+            let request = await fetch(baseUrl, {
+                method: "POST",
+                headers: {
+                    'Accept': 'text/plain',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                  exchange: props.exchange,
+                  crypto: props.baseCurrency,
+                  currency: props.quoteCurrency,
+                  action: transaction
+                })
+            });
+
+            let response = await request.text();
+
+            if (response === "invalid request") {
+                setColor('lightgray');
+            }
+        }
+        else {
+            setColor('lightgray');
+
+            let request = await fetch(baseUrl, {
+                method: "DELETE",
+                headers: {
+                    'Accept': 'text/plain',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                  exchange: props.exchange,
+                  crypto: props.baseCurrency,
+                  currency: props.quoteCurrency,
+                  action: transaction
+                })
+            });
+
+            let response = await request.text();
+
+            if (response === "invalid request") {
+                setColor('gold');
+            }
+        }
     };
 
     return(
@@ -63,7 +107,11 @@ function ExchangeResult(props) {
                             <Row className="align-items-baseline text-center">
                                 <Col className="text-right">
                                     <span className="amount mr-1">
-                                        {props.amount}
+                                        {
+                                            props.amount !== null ?
+                                            props.amount :
+                                            ""
+                                        }
                                     </span>
                                     &nbsp;
                                     <span className="currency">
@@ -79,7 +127,11 @@ function ExchangeResult(props) {
                                 </Col>
                                 <Col className="text-left">
                                     <span className="amount mr-1">
-                                        {props.price}
+                                        {
+                                            props.price !== null ?
+                                            props.price :
+                                            ""
+                                        }
                                     </span>
                                     <span className="currency">
                                         {props.quoteCurrency}

@@ -3,12 +3,3 @@
     "default": "agora-36616"
   }
 }
-
-
-{
-  apikey: "AIzaSyB-4QRn4XGp2EVTcRxrDX8hf0VQ9jiu-GQ",
-  authDomain: "agora.bid",
-  databaseURL: "https://agora.bid",
-  projectId: "agora-36616",
-  storageBucket: ""
-}

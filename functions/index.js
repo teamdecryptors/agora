@@ -8,7 +8,8 @@ const admin = require('firebase-admin');
 const db = admin.initializeApp().database();
 
 const app = express();
-app.use(session({secret: "FAEYRHASERFE"}));
+app.use(session({secret: "FAEYRHASERFE", resave: true, 
+    saveUninitialized: true}));
 
 const cryptoSigFigs = 5;
 const round = (number, decimalPlaces) => {
@@ -391,13 +392,17 @@ app.get("/api/offerings/asks/marketDepth/:currency/:exchange/:cryptoCurrency", (
 })
 
 app.get("/api/favorites", (req, res) => {
-    let sessionID = "Fdg0pUXJ5NxbaA1aKmIZOJ-TZyQMYpF-";
-    db.ref("FAVORITES/" + sessionID).on('value', (snapshot) => {
+    // let sessionID = "Fdg0pUXJ5NxbaA1aKmIZOJ-TZyQMYpF-";
+    res.set('Access-Control-Allow-Origin', '*');
+    let uid = req.session.id;
+    db.ref("FAVORITES/" + uid).on('value', (snapshot) => {
         res.json(snapshot.val());
     })
 })
 
-app.post("/api/favorites", (req, res) => {    
+app.post("/api/favorites", (req, res) => {
+    res.set('Access-Control-Allow-Origin', '*');
+
     let uid = req.session.id;
     console.log(req.body.exchange);
     let exchange = req.body.exchange;
@@ -419,6 +424,8 @@ app.post("/api/favorites", (req, res) => {
 })
 
 app.delete('/api/favorites', (req, res) => {
+    res.set('Access-Control-Allow-Origin', '*');
+    
     let uid = req.session.id;
     let exchange = req.body.exchange;
     let crypto = req.body.crypto;
