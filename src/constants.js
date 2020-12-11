@@ -8,7 +8,6 @@ import zecIcon from '@iconify-icons/cryptocurrency/zec';
 import xlmIcon from '@iconify-icons/cryptocurrency/xlm';
 import linkIcon from '@iconify-icons/cryptocurrency/link';
 import bchIcon from '@iconify-icons/cryptocurrency/bch';
-import xmrIcon from '@iconify-icons/cryptocurrency/xmr';
 import usdtIcon from '@iconify-icons/cryptocurrency/usdt';
 import dotIcon from '@iconify-icons/cryptocurrency/dot';
 import eosIcon from '@iconify-icons/cryptocurrency/eos';
@@ -147,10 +146,6 @@ export const currencies = {
         name: "Bitcoin Cash",
         icon: bchIcon
     },
-    XMR: {
-        name: "Monero",
-        icon: xmrIcon
-    },
     USDT: {
         name: "Tether",
         icon: usdtIcon
@@ -188,7 +183,7 @@ export const currencies = {
 export const quoteCurrencies = ["USD", "BTC", "EUR"];
 
 export const baseCurrencies = [
-    "BTC", "ETH", "LTC", "XRP", "ZEC", "XLM", "LINK", "BCH", "XMR", "USDT", 
+    "BTC", "ETH", "LTC", "XRP", "ZEC", "XLM", "LINK", "BCH", "USDT", 
     "DOT", "EOS", "TRX", "ADA", "DASH", "XTZ", "USDC"
 ];
     

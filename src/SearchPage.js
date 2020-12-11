@@ -44,6 +44,12 @@ function moveSearchBoxToTop() {
     searchPageWrapper.classList.add("pt-5");
 }
 
+function errorHandling(amount) {
+    if (amount <= 0 || isNaN(amount)){
+        return true;
+    }
+}
+
 function SearchPage(props) {
     const defaultBaseCurrency = baseCurrencies[0];
     const defaultQuoteCurrency = quoteCurrencies[0];
@@ -59,20 +65,14 @@ function SearchPage(props) {
     const [searchResultBases, setSearchResultBases] = useState([]);
     const [lastSearchType, setLastSearchType] = useState(searchType);
 
-    const isError = useMemo(() => amount <= 0 || isNaN(amount), [amount]);
+    const isError = useMemo(() => errorHandling(amount), [amount]);
     const [showError, setShowError] = useState(false);
 
     const shouldMoveSearchBoxToTop = useMemo(() => {
         return searchResults.length > 0;
     }, [searchResults.length]);
 
-    const onSearchBoxSearchButtonClick = async () => {
-        setShowError(isError);
-
-        if (isError) {
-            return;
-        }
-        
+    const receiveInput = async () =>{
         let baseUrl = "https://agora.bid/api/offerings";
 
         baseUrl += "/" + transactionType + "/" + searchType;
@@ -86,9 +86,8 @@ function SearchPage(props) {
         baseUrl += "/" + quoteCurrency + "/" + amount;
 
         let response = await fetch(baseUrl);
-        let offerings = await response.json();
+        let offerings = await response.json(); 
 
-        // Temporary
         for (let offering of offerings.offerings) {
             offering.TransactionType = transactionType;
         }
@@ -98,6 +97,25 @@ function SearchPage(props) {
         setLastSearchType(searchType);
 
         setIsRetrievingResults(false);
+    }
+
+    function improperInput(){
+        setShowError(isError);
+
+        if (isError) {
+            return true;
+        }
+
+        return false;
+    }
+
+    const onSearchBoxSearchButtonClick = async () => {
+        if (improperInput()){
+            return;
+        }
+
+        receiveInput();
+
     };
 
     useEffect(() => {
