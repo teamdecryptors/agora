@@ -3,6 +3,7 @@ import AboutPageProfile from './AboutPageProfile';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import { teamMembers } from './constants';
+import conference_picture from './headshots/conference.png';
 import './AboutPage.css';
 
 
@@ -125,6 +126,9 @@ function AboutPage(props) {
                 <br/>
             </Col>
             <Col className='missionCol'>
+                <Row>
+                    <img src={conference_picture} alt="Group Meeting" style={{width:'100%',height:'auto', marginBottom:'25px'}}/>
+                </Row>
                 <Row>
                     <div className='missionBox'>
                     <h5 style={{margin:20}}>Our Mission</h5>
