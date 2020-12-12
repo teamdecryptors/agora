@@ -31,7 +31,7 @@ router.get("/asks/budget/:currency/:amount", async (req, res) => {
 })
 
 router.get("/bids/budget/:currency/:amount", async (req, res) => {
-    let output = await getBudgetAsks(
+    let output = await getBudgetBids(
         req.params.currency,
         req.params.amount);
     res.json(output);
