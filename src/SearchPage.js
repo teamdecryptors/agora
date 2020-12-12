@@ -72,7 +72,7 @@ function SearchPage(props) {
         return searchResults.length > 0;
     }, [searchResults.length]);
 
-    const receiveInput = async () =>{
+    const getSearchResults = async () =>{
         let baseUrl = "https://agora.bid/api/offerings";
 
         baseUrl += "/" + transactionType + "/" + searchType;
@@ -114,7 +114,7 @@ function SearchPage(props) {
             return;
         }
 
-        receiveInput();
+        getSearchResults();
 
     };
 
