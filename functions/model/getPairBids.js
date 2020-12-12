@@ -22,8 +22,8 @@ module.exports = async function getPairAsks(cryptoCurrency, currency, amount) {
             const offeringSize = parseFloat(offeringDepth[offer].size);
             const totalCost = (unitCost*offeringSize)
             if(remainingBudget < totalCost) {
-                cryPurchased += remainingBudget / unitCost;
-                currSpent += remainingBudget;
+                cryPurchased += remainingBudget;
+                currSpent += remainingBudget * unitCost;
                 break;
             }
             else {
