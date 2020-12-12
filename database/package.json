@@ -1,0 +1,15 @@
+{
+  "name": "agoradb",
+  "version": "1.0.0",
+  "description": "\"agora's database side\"",
+  "main": "runDB.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Haocheng Li",
+  "license": "ISC",
+  "dependencies": {
+    "firebase": "^8.1.1",
+    "node-fetch": "^2.6.1"
+  }
+}
