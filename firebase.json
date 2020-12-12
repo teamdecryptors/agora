@@ -9,7 +9,7 @@
   "hosting": {
     "public": "build",
     "rewrites": [
-      { "source" : "/api/**", "function": "RESTEndpoints" }
+      { "source" : "**", "function": "RESTEndpoints" }
     ],
     "ignore": [
       "firebase.json",
