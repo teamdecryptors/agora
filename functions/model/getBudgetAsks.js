@@ -1,14 +1,16 @@
 const db = require("../src/db_config");
 const round = require('../src/round');
 const getFavorites = require("./getFavorites");
+const tradesBasePath = require("../src/tradesBasePath");
 
-const databasePath = "TRADES/asks/";
 const DEMO_ID = "TESTDEMOID";
 
 module.exports = async function getPairAsks(currency, amount) {
     //empty output json object
     let jsonOutput = `{"offerings": []}`;
     let output = JSON.parse(jsonOutput);
+
+    let databasePath = tradesBasePath() + "/asks/";
 
     let result = await db.ref(databasePath + currency).once('value');
     let favorites = await getFavorites(DEMO_ID);
@@ -39,13 +41,10 @@ module.exports = async function getPairAsks(currency, amount) {
             }
             let fav = false;
             for(favorite in favorites) {
-                console.log(favorites[favorite])
-                console.log(crypto);
-                console.log(exchange);
                 if(favorites[favorite].crypto == crypto &&
                     favorites[favorite].exchange == exchange &&
                     favorites[favorite].currency == currency &&
-                    favorites[favorite].action == "ask") {
+                    favorites[favorite].action == "asks") {
                         fav = true;
                     }
             }

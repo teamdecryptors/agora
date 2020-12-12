@@ -1,14 +1,20 @@
 const db = require("../src/db_config");
 const round = require('../src/round');
+const tradesBasePath = require("../src/tradesBasePath");
+const getFavorites = require("./getFavorites");
 
-const databasePath = "TRADES/asks/";
+const DEMO_ID = "TESTDEMOID";
 
 module.exports = async function getPairAsks(currency, amount) {
     //empty output json object
     let jsonOutput = `{"offerings": []}`;
     let output = JSON.parse(jsonOutput);
 
+    let databasePath = tradesBasePath() + "/bids/";
+
     let result = await db.ref(databasePath + currency).once('value');
+    let favorites = await getFavorites(DEMO_ID);
+    
     let offers = result.val()
     for(exchange in offers) {        
        for(crypto in offers[exchange]) {
@@ -34,6 +40,20 @@ module.exports = async function getPairAsks(currency, amount) {
                 }
             }
 
+            let fav = false;
+            for(favorite in favorites) {
+                console.log(favorites[favorite])
+                console.log(crypto);
+                console.log(exchange);
+                if(favorites[favorite].crypto == crypto &&
+                    favorites[favorite].exchange == exchange &&
+                    favorites[favorite].currency == currency &&
+                    favorites[favorite].action == "bids") {
+                        fav = true;
+                        break;
+                    }
+            }
+
             output['offerings'].push( { 
                 "Exchange": exchange, 
                 "CryptoCurrency" : crypto,
@@ -41,7 +61,7 @@ module.exports = async function getPairAsks(currency, amount) {
                 "Currency": currency,
                 "Price" : round(currSpent, 2),
                 "Action": "asks",
-                "isFavorited": false //TODO: reimplement favorites
+                "isFavorited": fav 
             });
         }
         
