@@ -42,13 +42,11 @@ module.exports = async function getPairAsks(currency, amount) {
 
             let fav = false;
             for(favorite in favorites) {
-                console.log(favorites[favorite])
-                console.log(crypto);
-                console.log(exchange);
+                console.log(favorites[favorite].action == "bids")
                 if(favorites[favorite].crypto == crypto &&
                     favorites[favorite].exchange == exchange &&
                     favorites[favorite].currency == currency &&
-                    favorites[favorite].action == "bids") {
+                    favorites[favorite].action === "bids") {
                         fav = true;
                         break;
                     }

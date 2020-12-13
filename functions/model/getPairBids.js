@@ -44,7 +44,7 @@ module.exports = async function getPairAsks(cryptoCurrency, currency, amount) {
                 if(favorites[favorite].crypto == cryptoCurrency &&
                     favorites[favorite].exchange == exchange &&
                     favorites[favorite].currency == currency &&
-                    favorites[favorite].action == "bids") {
+                    favorites[favorite].action === "bids") {
                         fav = true;
                     }
             }
