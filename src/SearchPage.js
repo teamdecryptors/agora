@@ -77,6 +77,7 @@ function SearchPage(props) {
 
         baseUrl += "/" + transactionType + "/" + searchType;
 
+        setSearchResults([]);
         setIsRetrievingResults(true);
 
         if (searchType === searchTypes.PAIR) {
